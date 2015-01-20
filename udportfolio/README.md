@@ -6,6 +6,13 @@ To get started, check out the repository, inspect the code,
 
 ### Getting started
 
+To execute the udportfolio site:
+Click [http://akonanga.github.io/udportfolio/](http://akonanga.github.io/udportfolio/).
+
+To profile http://akonanga.github.io/udportfolio/ using PageSpeed:
+Click [https://developers.google.com/speed/pagespeed/insights/?url=http://akonanga.github.io/udportfolio/] (https://developers.google.com/speed/pagespeed/insights/?url=http://akonanga.github.io/udportfolio/).
+
+
 Some useful tips to help you get started:
 
 1. Check out the repository
