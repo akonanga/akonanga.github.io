@@ -9,6 +9,18 @@
 
     <!-- Hmm, what is the impact of web fonts on speed? Measure it... -->
     <link href="//fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+      <!--https://developers.google.com/speed/pagespeed/module/filter-css-inline-google-fonts-->
+      <style>
+          body {
+          font-family: "Open Sans";
+          font-weight: 300;
+          /*@font-face {*/
+          /*font-family: 'Open+Sans';*/
+          /*font-style: normal;*/
+          /*font-weight: 400,700;*/
+          /*src: local('Open+Sans Regular'), local('Open+Sans-Regular'), url(http://themes.googleusercontent.com/static/fonts/roboto/v9/abcd.woff) format('woff');*/
+      }
+      </style>
 
       <style type="text/css">
           html {
