@@ -10,14 +10,27 @@
     <!-- Hmm, what is the impact of web fonts on speed? Measure it... -->
     <!--<link href="//fonts.googleapis.com/css?family=Open+Sans:400,700" rel="dns-prefetch">-->
       <!--https://developers.google.com/speed/pagespeed/module/filter-css-inline-google-fonts-->
-      <!--http://stackoverflow.com/questions/15930003/downloading-a-google-font-and-setting-up-an-offline-site-that-uses-it-->
       <style type="text/css">
+          <!--https://wordpress.org/support/topic/open-sans-typeface-in-twentytwelve-theme-->
+          /*@font-face {*/
+              /*font-family: 'Open Sans';*/
+              /*font-style: normal;*/
+              /*font-weight: 400,700;*/
+              /*src: local('Open Sans Bold'), local('OpenSans-Bold'), url(https://themes.googleusercontent.com/static/fonts/opensans/v6/k3k702ZOKiLJc3WVjuplzBa1RVmPjeKy21_GQJaLlJI.woff) format('woff');*/
+          /*}*/
           @font-face {
               font-family: 'Open Sans';
               font-style: normal;
-              font-weight: bold,400,700;
-              src: local('Open Sans Light'), local('OpenSans-Light'), url(http://themes.googleusercontent.com/static/fonts/opensans/v6/DXI1ORHCpsQm3Vp6mXoaTaRDOzjiPcYnFooOUGCOsRk.woff) format('woff');
+              font-weight: 400,700;
+              src: local('Open Sans'), local('OpenSans'), url(https://themes.googleusercontent.com/static/fonts/opensans/v6/u-WUoqrET9fUeobQW7jkRT8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
           }
+          <!--http://stackoverflow.com/questions/15930003/downloading-a-google-font-and-setting-up-an-offline-site-that-uses-it-->
+          /*@font-face {*/
+              /*font-family: 'Open Sans';*/
+              /*font-style: bold;*/
+              /*font-weight: 400,700;*/
+              /*src: local('Open Sans'), local('OpenSans'), url(http://themes.googleusercontent.com/static/fonts/opensans/v6/DXI1ORHCpsQm3Vp6mXoaTaRDOzjiPcYnFooOUGCOsRk.woff) format('woff');*/
+          /*}*/
       </style>
       <!--<style>-->
           <!--body {-->
