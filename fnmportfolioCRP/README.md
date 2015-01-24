@@ -10,7 +10,7 @@ To get started, check out the repository, inspect the code,
 To execute the udportfolio site:
 Click [http://akonanga.github.io/fnmportfolioCRP/](http://akonanga.github.io/fnmportfolioCRP/).
 
-To profile http://akonanga.github.io/udportfolioCRP/ using PageSpeed:
+To profile http://akonanga.github.io/fnmportfolioCRP/ using PageSpeed:
 Click [https://developers.google.com/speed/pagespeed/insights/?url=http://akonanga.github.io/fnmportfolioCRP/] (https://developers.google.com/speed/pagespeed/insights/?url=http://akonanga.github.io/fnmportfolioCRP/).
 
 
