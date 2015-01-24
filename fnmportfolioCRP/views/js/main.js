@@ -134,7 +134,7 @@ var pizzaIngredients = {
         "BBQ Sauce",
         "No Sauce",
         "Hot Sauce"
-    ]
+    ],
     crusts: [
         "White Crust",
         "Whole Wheat Crust",
