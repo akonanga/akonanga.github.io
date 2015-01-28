@@ -514,7 +514,7 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
   for (var i = numberOfEntries - 1; i > numberOfEntries - 11; i--) {
     sum = sum + times[i].duration;
   }
-  console.log("Average time to generate last 10 frames: " + sum / 10 + "ms");
+  console.log("a. Average time to generate last 10 frames: " + sum / 10 + "ms");
 }
 
 // The following code for sliding background pizzas was pulled from Ilya's demo found at:
@@ -522,15 +522,18 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 
 // Moves the sliding background pizzas based on scroll position
 function updatePositions() {
-  frame++;
-    window.performance.mark("mark_start_frame");
-
-  var items = document.querySelectorAll('.mover');
+    frame++;
+    var items = document.querySelectorAll('.mover');
     var itemsLen = items.length;
-  for (var i = 0; i < itemsLen; i++) {
-    var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
-    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
-  }
+    var phase = 0;
+    var i = 0;
+    window.performance.mark("mark_start_frame");
+    for (i = 0; i < itemsLen; i++) {
+        phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
+        itemsItem = items[i];
+        itemsItem.style.left = itemsItem.basicLeft + 100 * phase + 'px';
+        //items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+    }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
   // Super easy to create custom metrics.
@@ -549,6 +552,7 @@ window.addEventListener('scroll', updatePositions);
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
+    var movingPizzas1 = document.querySelector("#movingPizzas1");
   for (var i = 0; i < 200; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
@@ -557,7 +561,8 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
-    document.querySelector("#movingPizzas1").appendChild(elem);
+      movingPizzas1.appendChild(elem);
+    //document.querySelector("#movingPizzas1").appendChild(elem);
   }
   updatePositions();
 });
