@@ -66,6 +66,12 @@ var project = {
             "title":"Mom",
             "dates":"2013 - 2014",
             "description":"Month to month Financial and Budget Analysis of projects"
+        },
+        {
+            "title":"Website Performance Optimization",
+            "dates":"Jan 2015 - Feb 2015",
+            "description":"Project 4 for Front-End Web Developer Nanodegree under Udacity",
+            "link": "fnmportfolioCRP/index.html"
         }
     ]
 }
@@ -117,6 +123,11 @@ project.display = function () {
         //console.log(this.projects[proj].title);
         $('#projects').append(HTMLprojectStart);
         var formattedPTitle = HTMLprojectTitle.replace("%data%", this.projects[proj].title);
+        if(typeof this.projects[proj].link === 'undefined') {
+            formattedPTitle = formattedPTitle.replace("%link%", "#");
+        } else {
+            formattedPTitle = formattedPTitle.replace("%link%", this.projects[proj].link);
+        }
         var formattedPDates = HTMLprojectDates.replace("%data%", this.projects[proj].dates);
         var formattedPDesc = HTMLprojectDescription.replace("%data%", this.projects[proj].description);
         var formattedProject = formattedPTitle
