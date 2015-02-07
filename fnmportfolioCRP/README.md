@@ -14,6 +14,21 @@ To profile http://akonanga.github.io/fnmportfolioCRP/ using PageSpeed:
 Click [https://developers.google.com/speed/pagespeed/insights/?url=http://akonanga.github.io/fnmportfolioCRP/] (https://developers.google.com/speed/pagespeed/insights/?url=http://akonanga.github.io/fnmportfolioCRP/).
 
 
+###Optimization of main.js for the pizza page
+1. For changePizzaSizes function:
+    1.  I found out that the values of dx and newwidth are the same inside the for loop.
+    1.  I decided just to compute for dx and newwidth only on the first index position outside of the for loop
+    1.  Use the computed dx and newwidth inside the for loop
+
+1. For updatePositions function:
+    1.  I found out that phase = Math.sin(document.body.scrollTop / 1250) are all the same values inside the for loop without the '(i %5)'
+    1.  I decided to do the phase = Math.sin(document.body.scrollTop / 1250) before the for loop
+    1.  Use phase inside the for loop
+
+1.  Since the number of pizza showing will NOT really reach 200, I decided to experiment with different values and came up with 10.
+
+
+
 Some useful tips to help you get started:
 
 1. Check out the repository

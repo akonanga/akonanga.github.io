@@ -473,10 +473,13 @@ var resizePizzas = function(size) {
   // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
       var cached_randomPizzaContainer = document.querySelectorAll(".randomPizzaContainer");
+      var dx = determineDx(cached_randomPizzaContainer[0], size);
+      var newwidth = (cached_randomPizzaContainer[0].offsetWidth + dx) + 'px';
     for (var i = 0; i < cached_randomPizzaContainer.length; i++) {
-      var dx = determineDx(cached_randomPizzaContainer[i], size);
-      var newwidth = (cached_randomPizzaContainer[i].offsetWidth + dx) + 'px';
+      //var dx = determineDx(cached_randomPizzaContainer[i], size);
+      //var newwidth = (cached_randomPizzaContainer[i].offsetWidth + dx) + 'px';
       cached_randomPizzaContainer[i].style.width = newwidth;
+        //console.log('i='+i+'..dx='+dx+'..newwidth='+newwidth);
     }
   }
 
@@ -523,15 +526,14 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 // Moves the sliding background pizzas based on scroll position
 function updatePositions() {
     frame++;
-    var items = document.querySelectorAll('.mover');
-    var itemsLen = items.length;
-    var phase = 0;
-    var i = 0;
     window.performance.mark("mark_start_frame");
-    for (i = 0; i < itemsLen; i++) {
-        phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
-        itemsItem = items[i];
-        itemsItem.style.left = itemsItem.basicLeft + 100 * phase + 'px';
+    var items = document.querySelectorAll('.mover');
+    var phase = Math.sin(document.body.scrollTop / 1250);
+    for (var i = 0; i < items.length; i++) {
+        //var phase = Math.sin(document.body.scrollTop / 1250);
+        //console.log('phase='+phase);
+        //phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
+        items[i].style.left = items[i].basicLeft + 100 * (phase + (i % 5)) + 'px';
         //items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
     }
 
@@ -553,7 +555,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
     var movingPizzas1 = document.querySelector("#movingPizzas1");
-  for (var i = 0; i < 200; i++) {
+  for (var i = 0; i < 10; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
