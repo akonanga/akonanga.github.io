@@ -1,15 +1,51 @@
 /**
  * Created by vidaluson on 2/9/15.
  */
-var ViewModel = function () {
-    this.clickCount = ko.observable(0);
-    this.name = ko.observable('Tabby');
-    this.imgSrc = ko.observable('images/cat1.jpg');
-    this.nicknames = ko.observableArray([
-            {nickname: 'Cookie Monster'},
-            {nickname: 'Big Bird'},
-            {nickname: 'Oscar The Grouch'}
-        ]);
+
+var initialCats = [
+    {
+        name: 'Cat1',
+        imgSrc: 'images/cat1.jpg',
+        clickCount: 0,
+        nicknames: ['Cookie Monster','Big Bird','Oscar The Grouch']
+    },
+    {
+        name: 'Cat2',
+        imgSrc: 'images/cat2.jpg',
+        clickCount: 0,
+        nicknames: ['Wolverine','Cyclops']
+    },
+    {
+        name: 'Cat3',
+        imgSrc: 'images/cat3.jpg',
+        clickCount: 0,
+        nicknames: ['Superman','Batman','SpiderMan']
+    },
+    {
+        name: 'Cat4',
+        imgSrc: 'images/cat4.jpg',
+        clickCount: 0,
+        nicknames: ['Joker','Riddler','Penguin','Two-Face']
+    },
+    {
+        name: 'Cat5',
+        imgSrc: 'https://placekitten.com/g/200/300',
+        clickCount: 0,
+        nicknames: ['Spongebob Squarepants','Gary','Squidwork','Patrick']
+    },
+    {
+        name: 'Cat6',
+        imgSrc: 'https://placekitten.com/g/250/350',
+        clickCount: 0,
+        nicknames: ['Iron Man','Thor','Hulk','Captain America']
+    }
+];
+
+var Cat = function (data) {
+    this.clickCount = ko.observable(data.clickCount);
+    this.name = ko.observable(data.name);
+    this.imgSrc = ko.observable(data.imgSrc);
+    this.nicknames = ko.observableArray(data.nicknames);
     this.level = ko.computed(function () {
         var level;
         var clickCnt = this.clickCount();
@@ -30,10 +66,27 @@ var ViewModel = function () {
         }
         return level;
     }, this);
+};
+
+
+var ViewModel = function () {
+    var self = this;
+
+    this.catList = ko.observableArray([]);
+
+    initialCats.forEach(function (catItem) {
+        self.catList.push(new Cat(catItem));
+    });
+
+    this.currentCat = ko.observable(this.catList()[0]);
 
     this.incrementCounter = function () {
-        this.clickCount(this.clickCount() + 1);
+        self.currentCat().clickCount(self.currentCat().clickCount() + 1);
     };
+
+    this.changeCat = function (clickedCat) {
+        self.currentCat(clickedCat);
+    }
 };
 
 ko.applyBindings(new ViewModel());
