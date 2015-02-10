@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Cat Clicker using KO</title>
+</head>
+<body>
+<div>
+    <h2 data-bind="text: name"></h2>
+    <h3 data-bind="text: level"></h3>
+    <div data-bind="text: clickCount"></div>
+    <img src="" alt="cute cat" data-bind="click: incrementCounter, attr: {src: imgSrc}"/>
+    <h3>Nicknames:</h3>
+    <ul data-bind="foreach: nicknames">
+        <li data-bind="text: nickname"></li>
+    </ul>
+</div>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js"></script>
+<script src="js/indexKO.js"></script>
+
+</body>
+</html>

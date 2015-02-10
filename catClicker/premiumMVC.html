@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="row">
+    <div class="col-md-6 col-sm-4">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <ul id="catList"></ul>
+            </div>
+        </div>
+        <div id="catAdmin">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <ul>
+                        <input class="form-control" type="button" id="adminButton" value="Admin">
+                    </ul>
+                </div>
+            </div>
+            <div class="row" id="catAdminEntry">
+                <div class="col-md-10 col-sm-10 col-md-offset-1 col-sm-offset-1">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div>
+                                Name<br>
+                                <input class="form-control" type="text" id="catAdminName" value=""><br>
+                            </div>
+                            <div>
+                                Image Source<br>
+                                <input class="form-control" type="url" id="catAdminImageSource" value=""><br>
+                            </div>
+                            <div>
+                                Click Count<br>
+                                <input class="form-control" type="number" id="catAdminClickCnt" value=""><br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="text-right">
+                                <input class="form-control" type="button" id="catAdminCancel" value="Cancel">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="text-right">
+                                <input class="form-control" type="button" id="catAdminSave" value="Save">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6" id="catDetail">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>
+                    <span id="catHeading"></span>
+                    <small>Click count:<span id="catClickCnt"></span></small>
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <img id="catImage" class="img-responsive">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="js/premiumMVCmyVersionjQuery.js"></script>
+</body>
+</html>
