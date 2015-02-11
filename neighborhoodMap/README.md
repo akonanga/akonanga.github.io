@@ -40,6 +40,7 @@ None of these are required, but they may be helpful.
 ### To execute the Neighborhood Map site:
 Click [http://akonanga.github.io/neighborhoodMap/index.html](http://akonanga.github.io/neighborhoodMap/index.html).
 
-### Resources that helped me accomplished this project
+### Additional resources that helped me accomplish this project
 1.  I used a cdn namely [//cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js](//cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js) instead of downloading Knockout Framework
-1.  def
+1.  [http://www.w3schools.com/googleapi/](http://www.w3schools.com/googleapi/)
+1.  [http://code.tutsplus.com/courses/custom-interactive-maps-with-the-google-maps-api/lessons/setting-up-a-key](http://code.tutsplus.com/courses/custom-interactive-maps-with-the-google-maps-api/lessons/setting-up-a-key)
