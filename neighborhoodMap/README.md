@@ -33,8 +33,19 @@ You will learn how design patterns assist in developing a manageable codebase. Y
 None of these are required, but they may be helpful.
 
 1.  [Foursquare API](https://developer.foursquare.com/start)
+    ####Doc:
+    1.  [https://developer.foursquare.com/start/search](https://developer.foursquare.com/start/search)
+
+    ####Sample:
+    1.  [https://api.foursquare.com/v2/venues/explore?ll=40.7,-74&client_id=C4KJ2R33H3VRWV4PGTJWPL1H4Q2YZ1KZMYAASDDJ5PV2JZPY&client_secret=3HVIXSPYGDXRUSGQSYUVSIA3QWHQJ3YMQQESLYKZKB2RVIQ5&v=20150211](https://api.foursquare.com/v2/venues/explore?ll=40.7,-74&client_id=C4KJ2R33H3VRWV4PGTJWPL1H4Q2YZ1KZMYAASDDJ5PV2JZPY&client_secret=3HVIXSPYGDXRUSGQSYUVSIA3QWHQJ3YMQQESLYKZKB2RVIQ5&v=20150211)
+
 1.  [MediaWikiAPI for Wikipedia](http://www.mediawiki.org/wiki/API%3aMain_page)
+    ####Sample:
+    1.  [http://en.wikipedia.org/w/api.php?format=jsonfm&action=opensearch&search=san%20ramon](http://en.wikipedia.org/w/api.php?format=jsonfm&action=opensearch&search=san%20ramon) for formatted output not useful programmatically but only for debugging
+    1.  [http://en.wikipedia.org/w/api.php?format=json&action=opensearch&search=san%20ramon](http://en.wikipedia.org/w/api.php?format=json&action=opensearch&search=san%20ramon) notice the format parm.  This is use when inside a javascript.
+
 1.  [Google Maps Street View Service](https://developers.google.com/maps/documentation/javascript/streetview)
+
 1.  [Google Maps](https://developers.google.com/maps/documentation/)
 
 ### To execute the Neighborhood Map site:
@@ -44,3 +55,5 @@ Click [http://akonanga.github.io/neighborhoodMap/index.html](http://akonanga.git
 1.  I used a cdn namely [//cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js](//cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js) instead of downloading Knockout Framework
 1.  [http://www.w3schools.com/googleapi/](http://www.w3schools.com/googleapi/)
 1.  [http://code.tutsplus.com/courses/custom-interactive-maps-with-the-google-maps-api/lessons/setting-up-a-key](http://code.tutsplus.com/courses/custom-interactive-maps-with-the-google-maps-api/lessons/setting-up-a-key)
+1.  [https://developers.google.com/maps/documentation/javascript/examples/places-searchbox](https://developers.google.com/maps/documentation/javascript/examples/places-searchbox) to place search box in google maps with autocomplete
+1.  [https://developer.yahoo.com/weather/](https://developer.yahoo.com/weather/)

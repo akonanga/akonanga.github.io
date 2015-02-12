@@ -12,7 +12,7 @@ var bio = {
     "contacts": {
         "email":"vu7518@att.com",
         "mobilePhone":"925-823-9850",
-        "location":"San Ramon"
+        "location":"2549 Fountainhead Dr, San Ramon, CA"
     },
     "skills": [
         "Web Developer", "Mainframe Programmer"
@@ -24,14 +24,14 @@ var work = {
             "employer":"AT&T",
             "title":"Senior Technical Architect",
             "dates":"November 1995 - Present",
-            "location":"San Ramon, CA, USA",
+            "location":"2600 Camino Ramon, San Ramon, CA",
             "description":"Web Developer"
         },
         {
             "employer":"Philippine Long Distance Telephone Company",
             "title":"Senior Analyst/Programmer",
             "dates":"August 1988 - August 1995",
-            "location":"Manila, Philippines",
+            "location":"Ramon Cojuangco Building, Makati Ave. corner Ayala Ave., Legaspi Village, Makati City, Metro Manila, Philippines",
             "description":"Mainframe Developer for Service Order and Billing Systems"
         }
     ]
@@ -42,8 +42,17 @@ var education = {
             "name": "Adamson University",
             "city": "Manila, Philippines",
             "degree": "undergraduate",
-            "major": "AB",
-            "dates": "1980-1984"
+            "major": "AB Philsophy",
+            "dates": "1980-1984",
+            "location": "900,San Marcelino Street,Ermita,Manila City 1000,Metro Manila, Philippines"
+        },
+        {
+            "name": "AMA Computer College",
+            "city": "Manila, Philippines",
+            "degree": "undergraduate",
+            "major": "B.S Computer Science",
+            "dates": "1988-1990",
+            "location": "5486 South Superhighway corner Gen. Tinio St., Bangkal, Makati City,Metro Manila, Philippines"
         }
     ],
     "onlineCourses":[

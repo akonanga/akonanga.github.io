@@ -3,15 +3,56 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-    <style type="text/css">
-        html, body,#map-canvas  { height: 100%; margin: 0; padding: 0;}
-        /*#map-canvas { height: 300px; margin: 20px; padding: 0}*/
-    </style>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/index.css">
+    
 </head>
 <body>
-before
-<div id="map-canvas"></div>
-after
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Neighborhood Map Project</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-2">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>My Markers</h4>
+                    <ul>
+                        <li>test1</li>
+                        <li>test2</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Search Markers</h4>
+                    <ul>
+                        <li>mark1</li>
+                        <li>mark2</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9 col-sm-10">
+            <div class="row">
+                <div class="col-md-12">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab animi assumenda, aut consectetur, cupiditate deserunt dolor exercitationem mollitia nam nostrum odio officiis perspiciatis, recusandae? Aliquam dolorum iure nam quasi quidem.
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="map-canvas"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
 <script type="text/javascript">
@@ -43,6 +84,8 @@ after
     }
     google.maps.event.addDomListener(window, 'load', initialize);
 </script>
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js"></script>
 <script src="js/index.js"></script>
 </body>
