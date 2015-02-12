@@ -57,3 +57,7 @@ Click [http://akonanga.github.io/neighborhoodMap/index.html](http://akonanga.git
 1.  [http://code.tutsplus.com/courses/custom-interactive-maps-with-the-google-maps-api/lessons/setting-up-a-key](http://code.tutsplus.com/courses/custom-interactive-maps-with-the-google-maps-api/lessons/setting-up-a-key)
 1.  [https://developers.google.com/maps/documentation/javascript/examples/places-searchbox](https://developers.google.com/maps/documentation/javascript/examples/places-searchbox) to place search box in google maps with autocomplete
 1.  [https://developer.yahoo.com/weather/](https://developer.yahoo.com/weather/)
+
+####Google Maps Resources/Samples:
+1.  [http://stackoverflow.com/questions/12722925/google-maps-and-knockoutjs](http://stackoverflow.com/questions/12722925/google-maps-and-knockoutjs)
+1.  [http://jsfiddle.net/rniemeyer/FcSmA/](http://jsfiddle.net/rniemeyer/FcSmA/)
