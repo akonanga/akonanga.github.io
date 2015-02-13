@@ -61,3 +61,4 @@ Click [http://akonanga.github.io/neighborhoodMap/index.html](http://akonanga.git
 ####Google Maps Resources/Samples:
 1.  [http://stackoverflow.com/questions/12722925/google-maps-and-knockoutjs](http://stackoverflow.com/questions/12722925/google-maps-and-knockoutjs)
 1.  [http://jsfiddle.net/rniemeyer/FcSmA/](http://jsfiddle.net/rniemeyer/FcSmA/)
+1.  [http://www.drawbackz.com/stack/103921/google-maps-api-v3-recenter-the-map-to-a-marker.html](http://www.drawbackz.com/stack/103921/google-maps-api-v3-recenter-the-map-to-a-marker.html)

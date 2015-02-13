@@ -21,9 +21,8 @@
             <div class="row">
                 <div class="col-md-12" id="myMarkersView">
                     <h4>My Markers</h4>
-                    <ul>
-                        <li>test1</li>
-                        <li>test2</li>
+                    <ul data-bind="foreach: myList">
+                        <li data-bind="text: name, click: $parent.gotoMarker"></li>
                     </ul>
                 </div>
             </div>
@@ -40,6 +39,7 @@
         <div class="col-md-8 col-sm-10">
             <div class="row">
                 <div class="col-md-12" id="mapView">
+                    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
                     <div id="map-canvas"></div>
                 </div>
             </div>
@@ -53,8 +53,8 @@
 </div>
 
 
-
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+<!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>-->
 <!--<script type="text/javascript">
     var map;
     function initialize() {
@@ -84,8 +84,8 @@
     }
     google.maps.event.addDomListener(window, 'load', initialize);
 </script>-->
-<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<!--<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>-->
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>-->
 <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js"></script>
 <script src="js/index.js"></script>
 </body>
