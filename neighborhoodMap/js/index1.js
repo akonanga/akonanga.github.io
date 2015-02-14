@@ -228,6 +228,7 @@ var ViewModel = function () {
     self.goToPoint = function(clickedPoint) {
         console.log(clickedPoint);
         map.setCenter(new google.maps.LatLng(clickedPoint['position'].k, clickedPoint['position'].D));
+        //map.setZoom(15);
     };
 
     this.gotoMarker = function (clickedListItem) {
