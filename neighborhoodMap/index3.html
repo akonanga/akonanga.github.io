@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>My Neighborhood Map Project</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>My Neighborhood Map Project</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-sm-2">
+            <ul data-bind="foreach: markerList">
+                <li data-bind="text: name, click: $parent.changeMarker"></li>
+            </ul>
+        </div>
+        <div class="col-md-8 col-sm-10">
+            <div class="row">
+                <div class="col-md-12"></div>
+
+                <div data-bind="with: currentMarker()">
+                    <h2 data-bind="text: name"></h2>
+
+                    <h3>Coordinates</h3>
+                    <ul>
+                        <li>Latitude: <span data-bind="text: lat"></span></li>
+                        <li>Longitude: <span data-bind="text: lng"></span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div>
+                <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+                <div id="map-canvas"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js"></script>
+<script src="js/index3.js"></script>
+
+</body>
+</html>

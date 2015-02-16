@@ -8,6 +8,7 @@ var map = new google.maps.Map(document.getElementById('map-canvas'), {
     title: 'Mi Casa',
     mapTypeId: google.maps.MapTypeId.ROADMAP
 });
+
 var markers =[];
 var markPoints = [];
 
@@ -223,12 +224,16 @@ var ViewModel = function () {
     });
     //this.myList = ko.observableArray([]);
     this.myMapMarkers = ko.observableArray([]);
+    this.currentLatLng = ko.observable();
 
     initialMyList.forEach(function (listItem) {
         self.myMapMarkers.push(new markPoint(listItem.name, listItem.lat, listItem.lng));
         self.myMarkPointList.push(new myList(listItem));
     });
     map.setZoom(14);
+
+    self.currentLatLng = ko.observable(initialMyList[0]);
+    console.log(self.currentLatLng());
 
     //this.myList = ko.observableArray(markers);
     //this.myMarkers = ko.observableArray(markers);
@@ -239,6 +244,10 @@ var ViewModel = function () {
         console.log(clickedPoint);
         map.setCenter(new google.maps.LatLng(clickedPoint['position'].k, clickedPoint['position'].D));
         //map.setZoom(15);
+    };
+
+    self.processLatLng = function (thisLatLng) {
+        console.log(thisLatLng);
     };
 
     this.gotoMarker = function (clickedListItem) {
