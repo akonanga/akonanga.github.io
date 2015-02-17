@@ -57,28 +57,28 @@ var initialMarkers = [
         lat: 37.766064,
         lng: -121.963439,
         isAddlTextFetched: false,
-        addlText: {}
+        addlTextSummary: null
     },
     {
         name: 'San Ramon Community Center',
         lat: 37.765266,
         lng: -121.953126,
         isAddlTextFetched: false,
-        addlText: {}
+        addlTextSummary: null
     },
     {
         name: 'San Ramon Regional Medical Center',
         lat: 37.776065,
         lng: -121.958221,
         isAddlTextFetched: false,
-        addlText: {}
+        addlTextSummary: null
     },
     {
         name: 'St. Joan of Arc Parish',
         lat: 37.768081,
         lng: -121.972779,
         isAddlTextFetched: false,
-        addlText: {}
+        addlTextSummary: null
     }
 ];
 
@@ -98,8 +98,8 @@ var Marker = function (data) {
     this.lat = ko.observable(data.lat);
     this.lng = ko.observable(data.lng);
     this.isAddlTextFetched = ko.observable(data.isAddlTextFetched);
-    this.addlText = ko.observable(data.addlText);
-/*    this.addlText = asyncComputed(function() {
+    this.addlTextSummary = ko.observable(data.addlTextSummary);
+/*    this.addlTextSummary = asyncComputed(function() {
         // Whenever "pageIndex", "sortColumn", or "sortDirection" change, this function will re-run
         var addlData;
         var client_id = 'C4KJ2R33H3VRWV4PGTJWPL1H4Q2YZ1KZMYAASDDJ5PV2JZPY';
@@ -112,7 +112,7 @@ var Marker = function (data) {
             return data[1]
         });
     }, this);*/
-/*    this.addlText = ko.observable();
+/*    this.addlTextSummary = ko.observable();
         ko.computed(function () {
         //New York Times
         var addlData;
@@ -123,7 +123,7 @@ var Marker = function (data) {
         var foursquareURL = 'https://api.foursquare.com/v2/venues/explore?ll=' + data.lat + ',' + data.lng + '&client_id=' + client_id + '&client_secret=' + client_secret + '&v=' + v;
         $.getJSON(foursquareURL, function (data) {
             console.log(data);
-            this.addlText = data;
+            this.addlTextSummary = data;
         }).error(function (evt) {
             //$nytHeaderElem.text('New York Times Articles Count Not Be Loaded');
         });
@@ -210,7 +210,7 @@ var ViewModel = function () {
                 lat: marker['position'].k,
                 lng: marker['position'].D,
                 isAddlTextFetched: false,
-                addlText: {}
+                addlTextSummary: null
             };
             self.markerList.push(new Marker(markerItem));
             self.currentMarker(markerItem);
@@ -242,6 +242,33 @@ var ViewModel = function () {
         } else {
             //map.setCenter(new google.maps.LatLng(clickedMarker.lat(), clickedMarker.lng()));
             new markPoint(clickedMarker.name, clickedMarker.lat, clickedMarker.lng);
+        }
+        if(!self.currentMarker().isAddlTextFetched()) {
+            var client_id = 'C4KJ2R33H3VRWV4PGTJWPL1H4Q2YZ1KZMYAASDDJ5PV2JZPY';
+            var client_secret = '3HVIXSPYGDXRUSGQSYUVSIA3QWHQJ3YMQQESLYKZKB2RVIQ5';
+            var today = new Date();
+            var v = today.getFullYear().toString() + ("0" + (today.getMonth() + 1)).slice(-2) + ("0" + (today.getDate())).slice(-2);
+            var foursquareURL = 'https://api.foursquare.com/v2/venues/explore?ll=' + self.currentMarker().lat() + ',' + self.currentMarker().lng() + '&client_id=' + client_id + '&client_secret=' + client_secret + '&v=' + v;
+            $.getJSON(foursquareURL, function (data) {
+                console.log(data);
+                var i = 0;
+                var upTo = 5;
+                var dataItems = data.response.groups[0].items;
+                var dataItemsArray = [];
+                do{
+                    var dataAddlText = {
+                        venue: dataItems[i].venue.name,
+                        summary: dataItems[i].tips[0].text,
+                        url: dataItems[i].tips[0].canonicalUrl
+                    };
+                    dataItemsArray[i] = dataAddlText;
+                    ++i;
+                }while(i < 5 && i < dataItems.length);
+                self.currentMarker().addlTextSummary(dataItemsArray);
+                self.currentMarker().isAddlTextFetched(true);
+            }).error(function (evt) {
+                //$nytHeaderElem.text('New York Times Articles Count Not Be Loaded');
+            });
         }
     }
 };
