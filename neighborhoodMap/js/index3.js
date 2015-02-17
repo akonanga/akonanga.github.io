@@ -2,6 +2,38 @@
  * Created by vidaluson on 2/9/15.
  */
 
+var markPoints = [];
+
+function markPoint(name, lat, long) {
+    this.name = name;
+    this.lat = ko.observable(lat);
+    this.long = ko.observable(long);
+
+    var marker = new google.maps.Marker({
+        position: new google.maps.LatLng(lat, long),
+        title: name,
+        map: map,
+        draggable: true
+    });
+    markPoints.push(marker);
+    map.panTo(marker.getPosition())
+    //map.setCenter(marker.getPosition())
+
+    //if you need the position while dragging
+    google.maps.event.addListener(marker, 'drag', function () {
+        var pos = marker.getPosition();
+        this.lat(pos.lat());
+        this.long(pos.lng());
+    }.bind(this));
+
+    //if you just need to update it when the user is done dragging
+    google.maps.event.addListener(marker, 'dragend', function () {
+        var pos = marker.getPosition();
+        this.lat(pos.lat());
+        this.long(pos.lng());
+    }.bind(this));
+}
+
 var map = new google.maps.Map(document.getElementById('map-canvas'), {
     zoom: 12,
     center: new google.maps.LatLng(37.769430, -121.991443),
@@ -11,28 +43,91 @@ var map = new google.maps.Map(document.getElementById('map-canvas'), {
 
 var markers =[];
 
+/*
+ {
+ name: 'Mi Casa No Su Casa',
+ lat: 37.769430,
+ lng: -121.991443
+ },
+ */
+
 var initialMarkers = [
     {
-        name: 'Mi Casa No Su Casa',
-        lat: 37.769430,
-        lng: -121.991443
-    },
-    {
-        name: 'Mi Trabajo Su Trabajo',
-        lat: 37.765087,
-        lng: -121.962852
+        name: 'AT&T San Ramon',
+        lat: 37.766064,
+        lng: -121.963439,
+        isAddlTextFetched: false,
+        addlText: {}
     },
     {
         name: 'San Ramon Community Center',
         lat: 37.765266,
-        lng: -121.953126
+        lng: -121.953126,
+        isAddlTextFetched: false,
+        addlText: {}
+    },
+    {
+        name: 'San Ramon Regional Medical Center',
+        lat: 37.776065,
+        lng: -121.958221,
+        isAddlTextFetched: false,
+        addlText: {}
+    },
+    {
+        name: 'St. Joan of Arc Parish',
+        lat: 37.768081,
+        lng: -121.972779,
+        isAddlTextFetched: false,
+        addlText: {}
     }
 ];
+
+
+//this.fetchedData = asyncDependentObservable(function () {
+//    return $.ajax("http://api.worldbank.org/country?prefix=?", {
+//        dataType: "jsonp",
+//        data: {per_page: this.numberToShow, region: this.chosenRegion, format: "jsonp"}
+//    }).pipe(function (data) {
+//        return data[1]
+//    });
+//}, this);
+
 
 var Marker = function (data) {
     this.name = ko.observable(data.name);
     this.lat = ko.observable(data.lat);
     this.lng = ko.observable(data.lng);
+    this.isAddlTextFetched = ko.observable(data.isAddlTextFetched);
+    this.addlText = ko.observable(data.addlText);
+/*    this.addlText = asyncComputed(function() {
+        // Whenever "pageIndex", "sortColumn", or "sortDirection" change, this function will re-run
+        var addlData;
+        var client_id = 'C4KJ2R33H3VRWV4PGTJWPL1H4Q2YZ1KZMYAASDDJ5PV2JZPY';
+        var client_secret = '3HVIXSPYGDXRUSGQSYUVSIA3QWHQJ3YMQQESLYKZKB2RVIQ5';
+        var today = new Date();
+        var v = today.getFullYear().toString() + ("0" + (today.getMonth() + 1)).slice(-2) + ("0" + (today.getDate())).slice(-2);
+        var foursquareURL = 'https://api.foursquare.com/v2/venues/explore?ll=' + data.lat + ',' + data.lng + '&client_id=' + client_id + '&client_secret=' + client_secret + '&v=' + v;
+        return $.ajax(foursquareURL, {
+            dataType: "json"}).pipe(function (data) {
+            return data[1]
+        });
+    }, this);*/
+/*    this.addlText = ko.observable();
+        ko.computed(function () {
+        //New York Times
+        var addlData;
+        var client_id = 'C4KJ2R33H3VRWV4PGTJWPL1H4Q2YZ1KZMYAASDDJ5PV2JZPY';
+        var client_secret = '3HVIXSPYGDXRUSGQSYUVSIA3QWHQJ3YMQQESLYKZKB2RVIQ5';
+        var today = new Date();
+        var v = today.getFullYear().toString() + ("0" + (today.getMonth() + 1)).slice(-2) + ("0" + (today.getDate())).slice(-2);
+        var foursquareURL = 'https://api.foursquare.com/v2/venues/explore?ll=' + data.lat + ',' + data.lng + '&client_id=' + client_id + '&client_secret=' + client_secret + '&v=' + v;
+        $.getJSON(foursquareURL, function (data) {
+            console.log(data);
+            this.addlText = data;
+        }).error(function (evt) {
+            //$nytHeaderElem.text('New York Times Articles Count Not Be Loaded');
+        });
+    }, this);*/
     //this.imgSrc = ko.observable(data.imgSrc);
     //this.level = ko.computed(function () {
     //    var level;
@@ -65,9 +160,6 @@ var ViewModel = function () {
     initialMarkers.forEach(function (markerItem) {
         self.markerList.push(new Marker(markerItem));
     });
-
-    this.currentMarker = ko.observable(this.markerList()[0]);
-
 
 
 
@@ -116,9 +208,12 @@ var ViewModel = function () {
             var markerItem = {
                 name: marker.title,
                 lat: marker['position'].k,
-                lng: marker['position'].D
+                lng: marker['position'].D,
+                isAddlTextFetched: false,
+                addlText: {}
             };
-            self.markerList.push(markerItem);
+            self.markerList.push(new Marker(markerItem));
+            self.currentMarker(markerItem);
 
             bounds.extend(place.geometry.location);
         }
@@ -136,10 +231,18 @@ var ViewModel = function () {
 
 
 
+    this.currentMarker = ko.observable(this.markerList()[0]);
+    new markPoint(this.markerList()[0].name(), this.markerList()[0].lat(), this.markerList()[0].lng());
+
 
     this.changeMarker = function (clickedMarker) {
         self.currentMarker(clickedMarker);
-        map.setCenter(new google.maps.LatLng(clickedMarker.lat, clickedMarker.lng));
+        if(typeof clickedMarker.name === 'function') {
+            new markPoint(clickedMarker.name(), clickedMarker.lat(), clickedMarker.lng());
+        } else {
+            //map.setCenter(new google.maps.LatLng(clickedMarker.lat(), clickedMarker.lng()));
+            new markPoint(clickedMarker.name, clickedMarker.lat, clickedMarker.lng);
+        }
     }
 };
 
