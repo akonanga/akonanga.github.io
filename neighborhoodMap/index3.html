@@ -38,18 +38,16 @@
                         Addl Info:
                         <small>(click items below)</small>
                     </h4>
-                    <ul>
-                        <li>info1</li>
-                        <li>info2</li>
-                        <li>info3</li>
-                        <li>info4</li>
-                        <li>info5</li>
+                    <ul data-bind="foreach: addlInfoList">
+                        <li data-bind="text: venue, click: $parent.showSummary"></li>
                     </ul>
                 </div>
                 <div class="col-md-7">
                     <h4>Summary:</h4>
-                    <p>
-                        <span></span>
+                    <p data-bind="with: currentSummary()">
+                        <a data-bind="text: venue, attr: { href : url }" target="_blank"></a>:
+                        <span data-bind="text: summary"></span>
+
                     </p>
                 </div>
             </div>

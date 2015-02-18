@@ -63,3 +63,5 @@ Click [http://akonanga.github.io/neighborhoodMap/index.html](http://akonanga.git
 1.  [http://jsfiddle.net/rniemeyer/FcSmA/](http://jsfiddle.net/rniemeyer/FcSmA/)
 1.  [http://www.drawbackz.com/stack/103921/google-maps-api-v3-recenter-the-map-to-a-marker.html](http://www.drawbackz.com/stack/103921/google-maps-api-v3-recenter-the-map-to-a-marker.html)
 1.  [http://stackoverflow.com/questions/5514559/google-maps-set-center-set-center-point-and-set-more-points](http://stackoverflow.com/questions/5514559/google-maps-set-center-set-center-point-and-set-more-points)
+1.  [http://stackoverflow.com/questions/18343930/href-and-mailto-links-in-knockoutjs](http://stackoverflow.com/questions/18343930/href-and-mailto-links-in-knockoutjs)
+        learn how to do <a> with data-bind

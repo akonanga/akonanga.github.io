@@ -3,6 +3,8 @@
  */
 
 var markPoints = [];
+var client_id = 'C4KJ2R33H3VRWV4PGTJWPL1H4Q2YZ1KZMYAASDDJ5PV2JZPY';
+var client_secret = '3HVIXSPYGDXRUSGQSYUVSIA3QWHQJ3YMQQESLYKZKB2RVIQ5';
 
 function markPoint(name, lat, long) {
     this.name = name;
@@ -93,6 +95,12 @@ var initialMarkers = [
 //}, this);
 
 
+var AddlInfo = function (data) {
+    this.venue = ko.observable(data.venue);
+    this.summary = ko.observable(data.summary);
+    this.url = ko.observable(data.url);
+};
+
 var Marker = function (data) {
     this.name = ko.observable(data.name);
     this.lat = ko.observable(data.lat);
@@ -162,6 +170,8 @@ var ViewModel = function () {
     });
 
 
+    this.currentSummary = ko.observable();
+
 
     // Create the search box and link it to the UI element.
     var input = /** @type {HTMLInputElement} */(
@@ -213,7 +223,7 @@ var ViewModel = function () {
                 addlTextSummary: null
             };
             self.markerList.push(new Marker(markerItem));
-            self.currentMarker(markerItem);
+            //self.currentMarker(markerItem);
 
             bounds.extend(place.geometry.location);
         }
@@ -234,6 +244,37 @@ var ViewModel = function () {
     this.currentMarker = ko.observable(this.markerList()[0]);
     new markPoint(this.markerList()[0].name(), this.markerList()[0].lat(), this.markerList()[0].lng());
 
+    var today = new Date();
+    var v = today.getFullYear().toString() + ("0" + (today.getMonth() + 1)).slice(-2) + ("0" + (today.getDate())).slice(-2);
+    var foursquareURL = 'https://api.foursquare.com/v2/venues/explore?ll=' + this.markerList()[0].lat() + ',' + this.markerList()[0].lng() + '&client_id=' + client_id + '&client_secret=' + client_secret + '&v=' + v;
+    $.getJSON(foursquareURL, function (data) {
+        //console.log(data);
+        var i = 0;
+        var upTo = 5;
+        var dataItems = data.response.groups[0].items;
+        var dataItemsArray = [];
+        do{
+            var dataAddlText = {
+                venue: dataItems[i].venue.name,
+                summary: dataItems[i].tips[0].text,
+                url: dataItems[i].venue.url
+            };
+            dataItemsArray[i] = dataAddlText;
+            ++i;
+        }while(i < 5 && i < dataItems.length);
+        self.currentMarker().addlTextSummary(dataItemsArray);
+        self.currentMarker().isAddlTextFetched(true);
+
+        self.addlInfoList().length = 0;
+        self.currentMarker().addlTextSummary().forEach(function (addlInfoItem) {
+            self.addlInfoList.push(new AddlInfo(addlInfoItem));
+        });
+        self.currentSummary(dataItemsArray[0]);
+    }).error(function (evt) {
+        //$nytHeaderElem.text('New York Times Articles Count Not Be Loaded');
+    });
+
+    this.addlInfoList = ko.observableArray([]);
 
     this.changeMarker = function (clickedMarker) {
         self.currentMarker(clickedMarker);
@@ -244,13 +285,11 @@ var ViewModel = function () {
             new markPoint(clickedMarker.name, clickedMarker.lat, clickedMarker.lng);
         }
         if(!self.currentMarker().isAddlTextFetched()) {
-            var client_id = 'C4KJ2R33H3VRWV4PGTJWPL1H4Q2YZ1KZMYAASDDJ5PV2JZPY';
-            var client_secret = '3HVIXSPYGDXRUSGQSYUVSIA3QWHQJ3YMQQESLYKZKB2RVIQ5';
             var today = new Date();
             var v = today.getFullYear().toString() + ("0" + (today.getMonth() + 1)).slice(-2) + ("0" + (today.getDate())).slice(-2);
             var foursquareURL = 'https://api.foursquare.com/v2/venues/explore?ll=' + self.currentMarker().lat() + ',' + self.currentMarker().lng() + '&client_id=' + client_id + '&client_secret=' + client_secret + '&v=' + v;
             $.getJSON(foursquareURL, function (data) {
-                console.log(data);
+                //console.log(data);
                 var i = 0;
                 var upTo = 5;
                 var dataItems = data.response.groups[0].items;
@@ -259,17 +298,27 @@ var ViewModel = function () {
                     var dataAddlText = {
                         venue: dataItems[i].venue.name,
                         summary: dataItems[i].tips[0].text,
-                        url: dataItems[i].tips[0].canonicalUrl
+                        url: dataItems[i].venue.url
                     };
                     dataItemsArray[i] = dataAddlText;
                     ++i;
                 }while(i < 5 && i < dataItems.length);
                 self.currentMarker().addlTextSummary(dataItemsArray);
                 self.currentMarker().isAddlTextFetched(true);
+
+                self.addlInfoList().length = 0;
+                self.currentMarker().addlTextSummary().forEach(function (addlInfoItem) {
+                    self.addlInfoList.push(new AddlInfo(addlInfoItem));
+                });
+                self.currentSummary(dataItemsArray[0]);
             }).error(function (evt) {
                 //$nytHeaderElem.text('New York Times Articles Count Not Be Loaded');
             });
         }
+    };
+
+    this.showSummary = function (clickedVenue) {
+        self.currentSummary(clickedVenue);
     }
 };
 
