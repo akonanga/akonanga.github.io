@@ -5,8 +5,22 @@
 You will develop a single page application featuring a map of your neighborhood or a neighborhood you would like to visit. You will then add additional functionality to this map including highlighted locations, third-party data about those locations and various ways to browse the content.
 
 ###How to execute from my github
+[http://akonanga.github.io/neighborhoodMap/index4.html](http://akonanga.github.io/neighborhoodMap/index4.html)
 
 
+###Functionality of the Neighborhood Map Project
+1.  Just like the cat clicker project, this project have a list of default point on the left side where it displays
+    Map Locations.  Map Locations items are clickable that will show the point in the map and will update the text on the right.
+1.  Addl Info and Summary data are pulled via ajax from foursquare
+1.  Addl Info list the first 5 items only.  I decided to limit to 5 items else I will run out of space since
+    foursquare's response gives 30 items.
+1.  Summary is updated only when an item in Addl Info is clicked.  It will show addl text on that Addl Info item and
+    a clickable link to go to that item's website.
+1.  Search functionality is incorporated in the map using google's code.  When an item on the search is clicked it will
+    update the map to show that item and add that point in Map Locations.  Also search functionality is using google's auto-complete.
+
+
+I suggest to search for a different city so that Addl Info are diversed.
 
 ###Why this Project?
 
@@ -56,6 +70,7 @@ None of these are required, but they may be helpful.
 Click [http://akonanga.github.io/neighborhoodMap/index.html](http://akonanga.github.io/neighborhoodMap/index.html).
 
 ### Additional resources that helped me accomplish this project
+1.  I used [http://getbootstrap.com/](http://getbootstrap.com/) for styling.
 1.  I used a cdn namely [//cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js](//cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js) instead of downloading Knockout Framework
 1.  [http://www.w3schools.com/googleapi/](http://www.w3schools.com/googleapi/)
 1.  [http://code.tutsplus.com/courses/custom-interactive-maps-with-the-google-maps-api/lessons/setting-up-a-key](http://code.tutsplus.com/courses/custom-interactive-maps-with-the-google-maps-api/lessons/setting-up-a-key)
