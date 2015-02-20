@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>My Neighborhood Map Project</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>My Neighborhood (San Ramon, CA) Map Project</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-sm-2">
+            <h4>
+                Map Locations:
+                <small>(click items below)</small>
+            </h4>
+            <ul data-bind="foreach: markerList">
+                <li data-bind="text: name, click: $parent.changeMarker"></li>
+            </ul>
+        </div>
+        <div class="col-md-8 col-sm-10">
+            <div class="row">
+                <div class="col-md-12" data-bind="with: currentMarker()">
+                    <h2>
+                        <span data-bind="text: name"></span>
+                        <!--<br><small><span data-bind="text: lat"></span>, <span data-bind="text: lng"></span></small>-->
+                    </h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <h4>
+                        Addl Info:
+                        <small>(click items below)</small>
+                    </h4>
+                    <ul data-bind="foreach: addlInfoList">
+                        <li data-bind="text: venue, click: $parent.showSummary"></li>
+                    </ul>
+                </div>
+                <div class="col-md-7">
+                    <h4>Summary:</h4>
+                    <p data-bind="with: currentSummary()">
+                        <a data-bind="text: venue, attr: { href : url }" target="_blank"></a>:
+                        <span data-bind="text: summary"></span>
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div>
+                <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+                <div id="map-canvas"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="js/index4.js"></script>
+
+</body>
+</html>
