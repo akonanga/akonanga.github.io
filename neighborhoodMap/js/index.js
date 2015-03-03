@@ -27,6 +27,16 @@ var ViewModel = function () {
         self.computed_currentNeighborhoodName = ko.computed(function () {
             map_currentNeighborhood(self.currentNeighborhoodName());
         });
+
+        self.isRestTextVisible = ko.observable(true);
+        self.toggleRestText = function () {
+            self.isRestTextVisible(!self.isRestTextVisible());
+        };
+
+        self.isPOIListVisible = ko.observable(true);
+        self.togglePOIList = function () {
+            self.isPOIListVisible(!self.isPOIListVisible());
+        };
     }
 
     function initializeMap(thisNeighborhood) {
