@@ -63,9 +63,6 @@ None of these are required, but they may be helpful.
     1.  [http://en.wikipedia.org/w/api.php?format=json&action=opensearch&search=san%20ramon](http://en.wikipedia.org/w/api.php?format=json&action=opensearch&search=san%20ramon) notice the format parm.  This is use when inside a javascript.
 
 1.  [Google Maps Street View Service](https://developers.google.com/maps/documentation/javascript/streetview)
-1.  [https://developers.google.com/maps/documentation/javascript/places](https://developers.google.com/maps/documentation/javascript/places)
-1.  [https://developers.google.com/maps/documentation/javascript/events](https://developers.google.com/maps/documentation/javascript/events)
-1.  [https://developers.google.com/maps/documentation/javascript/examples/icon-simple](https://developers.google.com/maps/documentation/javascript/examples/icon-simple)
 
 1.  [Google Maps](https://developers.google.com/maps/documentation/)
 
