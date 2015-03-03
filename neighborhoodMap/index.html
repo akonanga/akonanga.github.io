@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<div id="map-canvas"></div>
+<div id="map-canvas" data-bind="visible: !isGoogleIssueVisible()"></div>
 
 <div id="myTexts">
     <div class="container">
@@ -19,7 +19,7 @@
             <h2 data-bind="click: toggleRestText">My Neighborhood Map Project</h2>
         </div>
         <div data-bind="visible: isRestTextVisible">
-            <div class="row hidden" id="issueGoogle">
+            <div class="row" id="issueGoogle" data-bind="visible: isGoogleIssueVisible">
                 <div class="col-md-6">
                     <div class="panel panel-danger">
                         <div class="panel-heading">
@@ -28,15 +28,16 @@
                         <div class="panel-body">
                             There's a problem on accessing Google.  Maybe for the following reason(s):
                             <ul>
-                                <li>Your firewall does not allow access to Google</li>
-                                <li>Google itself has a problem</li>
                                 <li>Your are not connected to the internet</li>
+                                <li>Your firewall does not allow access to Google</li>
+                                <li>Google API has changed</li>
+                                <li>Google itself has a problem</li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" data-bind="visible: !isGoogleIssueVisible()">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="sr-only" for="currentNeighborhood">Current Neighborhood</label>

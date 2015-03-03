@@ -16,10 +16,20 @@ var ViewModel = function () {
         lng: -121.963439
     };
 
+    self.isGoogleIssueVisible = ko.observable(false);
     if(typeof google === 'undefined') {
-        $('#issueGoogle').removeClass('hidden').addClass('show');
+        //$('#issueGoogle').removeClass('hidden').addClass('show');
+        self.isGoogleIssueVisible(true);
     } else {
-        initializeMap(myDefaultNeighborhood);
+        //init google map BEGIN
+        //initializeMap(myDefaultNeighborhood);
+        var mapOptions = {
+            center: new google.maps.LatLng(myDefaultNeighborhood.lat, myDefaultNeighborhood.lng),
+            zoom: 13
+        };
+        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+        gMapInfoWindow = new google.maps.InfoWindow();
+        //init google map END
 
         self.currentNeighborhood = ko.observable(myDefaultNeighborhood);
         self.currentNeighborhoodName = ko.observable(myDefaultNeighborhood.name);
@@ -39,17 +49,19 @@ var ViewModel = function () {
         };
     }
 
-    function initializeMap(thisNeighborhood) {
-        var mapOptions = {
-            center: new google.maps.LatLng(thisNeighborhood.lat, thisNeighborhood.lng),
-            zoom: 13
-        };
-        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-        gMapInfoWindow = new google.maps.InfoWindow();
-    }
+    //function initializeMap(thisNeighborhood) {
+    //    var mapOptions = {
+    //        center: new google.maps.LatLng(thisNeighborhood.lat, thisNeighborhood.lng),
+    //        zoom: 13
+    //    };
+    //    map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+    //    gMapInfoWindow = new google.maps.InfoWindow();
+    //}
 
+    //self.map_currentNeighborhood = function(thisNeighborhoodName) {
     function map_currentNeighborhood(thisNeighborhoodName) {
         //https://developers.google.com/maps/documentation/javascript/places
+        console.log('1. map_currentNeighborhood');
         var request = {
             query: thisNeighborhoodName
         };
