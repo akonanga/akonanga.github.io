@@ -10,6 +10,7 @@ var ViewModel = function () {
     var service;
     var markers = [];
     var numOfVenues = 20;
+    var dataItemsArray = [];
 
     self.is4SquareIssueVisible = ko.observable(false);
     var client_id = 'C4KJ2R33H3VRWV4PGTJWPL1H4Q2YZ1KZMYAASDDJ5PV2JZPY';
@@ -64,9 +65,9 @@ var ViewModel = function () {
         $.getJSON(foursquareURL, function (data) {
             var i = 0;
             var dataItems = data.response.groups[0].items;
-            var dataItemsArray = [];
             do{
-                var dataAddlText = {
+                create_markers(dataItems[i], i);
+                /*var dataAddlText = {
                     venue: dataItems[i].venue.name,
                     address: dataItems[i].venue.location.formattedAddress,
                     telephone: (typeof dataItems[i].venue.contact.formattedPhone === 'undefined') ? 'none' : dataItems[i].venue.contact.formattedPhone,
@@ -97,13 +98,55 @@ var ViewModel = function () {
                         );
                         infoWindow.open(map, marker);
                     }
-                })(marker, i));
+                })(marker, i));*/
                 ++i;
             }while(i < numOfVenues && i < dataItems.length);
         }).error(function (evt) {
-            //$nytHeaderElem.text('New York Times Articles Count Not Be Loaded');
+            //foursquare issue
             self.is4SquareIssueVisible(true);
         });
+    };
+
+    var delete_markers = function () {
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(null);
+        }
+        markers = [];
+    };
+
+    var create_markers = function (dataItems, i) {
+        var dataAddlText = {
+            venue: dataItems.venue.name,
+            address: dataItems.venue.location.formattedAddress,
+            telephone: (typeof dataItems.venue.contact.formattedPhone === 'undefined') ? 'none' : dataItems.venue.contact.formattedPhone,
+            tip: dataItems.tips[0].text,
+            url: dataItems.venue.url,
+            lat: dataItems.venue.location.lat,
+            lng: dataItems.venue.location.lng
+        };
+        dataItemsArray[i] = dataAddlText;
+        // Create a marker for each place.
+        var completeAddr = dataAddlText.address.join('\n');
+        var marker = new google.maps.Marker({
+            map: map,
+            title: dataAddlText.venue + '\n' + completeAddr + '\n' + dataAddlText.telephone,
+            position: new google.maps.LatLng(dataAddlText.lat, dataAddlText.lng)
+        });
+        markers.push(marker);
+        google.maps.event.addListener(marker, "click", (function(marker, i) {
+            return function() {
+                map.panTo(marker.getPosition());
+                infoWindow.setContent(
+                    "<div>" +
+                    "<a href='" + dataItemsArray[i].url + "' target='_blank'><h3>" + dataItemsArray[i].venue + "</h3></a>" +
+                    "<p><span style='font-weight:bold;'>Address: </span>" + dataItemsArray[i].address.join(' ') + "</p>" +
+                    "<p><span style='font-weight:bold;'>Telephone: </span>" + dataItemsArray[i].telephone + "</p>" +
+                    "<p><span style='font-weight:bold;'>Tip: </span>" + dataItemsArray[i].tip + "</p>" +
+                    "</div>"
+                );
+                infoWindow.open(map, marker);
+            }
+        })(marker, i));
     };
 
     self.isGoogleIssueVisible = ko.observable(false);
@@ -124,11 +167,13 @@ var ViewModel = function () {
         map_currentNeighborhood(self.currentNeighborhoodName());
 
         self.currentNeighborhoodName.subscribe(function () {
-            for (var i = 0; i < markers.length; i++) {
-                markers[i].setMap(null);
-            }
-            markers = [];
+            delete_markers();
             map_currentNeighborhood(self.currentNeighborhoodName());
+        });
+
+        self.currentFilter = ko.observable();
+        self.currentFilter.subscribe(function () {
+            console.log('[' + self.currentFilter() + ']');
         });
 
         self.isRestTextVisible = ko.observable(true);

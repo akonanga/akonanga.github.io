@@ -117,7 +117,7 @@
                     <h4 data-bind="click: togglePOIList">Points of Interest</h4>
                     <div data-bind="visible: isPOIListVisible">
                         <div id="filterDIV">
-                            <input type="text" class="form-control" id="filter" placeholder="filter">
+                            <input type="text" class="form-control" id="filterInput" data-bind="value: currentFilter" placeholder="filter">
                             <!--<div class="form-group">
                                 <label class="sr-only" for="filter">Filter</label>
                                 <div class="input-group">
