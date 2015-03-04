@@ -66,6 +66,9 @@ None of these are required, but they may be helpful.
 1.  [https://developers.google.com/maps/documentation/javascript/places](https://developers.google.com/maps/documentation/javascript/places)
 1.  [https://developers.google.com/maps/documentation/javascript/events](https://developers.google.com/maps/documentation/javascript/events)
 1.  [https://developers.google.com/maps/documentation/javascript/examples/icon-simple](https://developers.google.com/maps/documentation/javascript/examples/icon-simple)
+1.  Subscribe example: [http://knockoutjs.com/examples/cartEditor.html](http://knockoutjs.com/examples/cartEditor.html)
+1.  [https://klipfolio.uservoice.com/knowledgebase/articles/287122-displaying-a-google-map-with-markers-and-values](https://klipfolio.uservoice.com/knowledgebase/articles/287122-displaying-a-google-map-with-markers-and-values)
+1.  [http://stackoverflow.com/questions/6150409/google-map-v3-set-center-to-specific-marker](http://stackoverflow.com/questions/6150409/google-map-v3-set-center-to-specific-marker)
 
 1.  [Google Maps](https://developers.google.com/maps/documentation/)
 
