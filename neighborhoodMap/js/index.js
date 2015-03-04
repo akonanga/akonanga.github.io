@@ -23,7 +23,6 @@ var ViewModel = function () {
 
     var map_currentNeighborhood = function(thisNeighborhoodName) {
         //https://developers.google.com/maps/documentation/javascript/places
-        console.log('1. var map_currentNeighborhood');
         var request = {
             query: thisNeighborhoodName
         };
@@ -34,9 +33,7 @@ var ViewModel = function () {
     // Checks that the PlacesServiceStatus is OK, and adds a marker
     // using the place ID and location from the PlacesService.
     var callback = function(results, status) {
-        console.log('1. var callback');
         if (status == google.maps.places.PlacesServiceStatus.OK) {
-            console.log('1 var callback IN',results[0],status);
             var lat = results[0].geometry.location.lat();
             var lng = results[0].geometry.location.lng();
             var newCenter = new google.maps.LatLng(lat, lng);
@@ -65,7 +62,6 @@ var ViewModel = function () {
         var v = today.getFullYear().toString() + ("0" + (today.getMonth() + 1)).slice(-2) + ("0" + (today.getDate())).slice(-2);
         var foursquareURL = 'https://api.foursquare.com/v2/venues/explore?ll=' + lat + ',' + lng + '&client_id=' + client_id + '&client_secret=' + client_secret + '&v=' + v;
         $.getJSON(foursquareURL, function (data) {
-            //console.log(data);
             var i = 0;
             var dataItems = data.response.groups[0].items;
             var dataItemsArray = [];
@@ -73,7 +69,7 @@ var ViewModel = function () {
                 var dataAddlText = {
                     venue: dataItems[i].venue.name,
                     address: dataItems[i].venue.location.formattedAddress,
-                    telephone: dataItems[i].venue.contact.formattedPhone,
+                    telephone: (typeof dataItems[i].venue.contact.formattedPhone === 'undefined') ? 'none' : dataItems[i].venue.contact.formattedPhone,
                     tip: dataItems[i].tips[0].text,
                     url: dataItems[i].venue.url,
                     lat: dataItems[i].venue.location.lat,
@@ -87,6 +83,7 @@ var ViewModel = function () {
                     title: dataAddlText.venue + '\n' + completeAddr + '\n' + dataAddlText.telephone,
                     position: new google.maps.LatLng(dataAddlText.lat, dataAddlText.lng)
                 });
+                markers.push(marker);
                 google.maps.event.addListener(marker, "click", (function(marker, i) {
                     return function() {
                         map.panTo(marker.getPosition());
@@ -103,8 +100,6 @@ var ViewModel = function () {
                 })(marker, i));
                 ++i;
             }while(i < numOfVenues && i < dataItems.length);
-            console.log(dataItemsArray);
-            //self.currentSummary(dataItemsArray[0]);
         }).error(function (evt) {
             //$nytHeaderElem.text('New York Times Articles Count Not Be Loaded');
             self.is4SquareIssueVisible(true);
@@ -113,7 +108,6 @@ var ViewModel = function () {
 
     self.isGoogleIssueVisible = ko.observable(false);
     if(typeof google === 'undefined') {
-        //$('#issueGoogle').removeClass('hidden').addClass('show');
         self.isGoogleIssueVisible(true);
     } else {
         //init google map BEGIN
@@ -130,7 +124,10 @@ var ViewModel = function () {
         map_currentNeighborhood(self.currentNeighborhoodName());
 
         self.currentNeighborhoodName.subscribe(function () {
-            console.log('subscribe');
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(null);
+            }
+            markers = [];
             map_currentNeighborhood(self.currentNeighborhoodName());
         });
 
