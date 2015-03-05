@@ -9,8 +9,13 @@ var ViewModel = function () {
     var infoWindow;
     var service;
     var markers = [];
-    var numOfVenues = 20;
-    var dataItemsArray = [];
+    var markersInfoWindow = [];
+
+    var numOfVenues = 0;        //number of foursquare venues to keep; if 0 then keep all
+
+    var cachedPOIList = [];
+    self.displayPOIList = ko.observableArray([]);
+
 
     self.is4SquareIssueVisible = ko.observable(false);
     var client_id = 'C4KJ2R33H3VRWV4PGTJWPL1H4Q2YZ1KZMYAASDDJ5PV2JZPY';
@@ -66,52 +71,31 @@ var ViewModel = function () {
             var i = 0;
             var dataItems = data.response.groups[0].items;
             do{
+                cachedPOIList.push(dataItems[i]);
                 create_markers(dataItems[i], i);
-                /*var dataAddlText = {
-                    venue: dataItems[i].venue.name,
-                    address: dataItems[i].venue.location.formattedAddress,
-                    telephone: (typeof dataItems[i].venue.contact.formattedPhone === 'undefined') ? 'none' : dataItems[i].venue.contact.formattedPhone,
-                    tip: dataItems[i].tips[0].text,
-                    url: dataItems[i].venue.url,
-                    lat: dataItems[i].venue.location.lat,
-                    lng: dataItems[i].venue.location.lng
-                };
-                dataItemsArray[i] = dataAddlText;
-                // Create a marker for each place.
-                var completeAddr = dataAddlText.address.join('\n');
-                var marker = new google.maps.Marker({
-                    map: map,
-                    title: dataAddlText.venue + '\n' + completeAddr + '\n' + dataAddlText.telephone,
-                    position: new google.maps.LatLng(dataAddlText.lat, dataAddlText.lng)
-                });
-                markers.push(marker);
-                google.maps.event.addListener(marker, "click", (function(marker, i) {
-                    return function() {
-                        map.panTo(marker.getPosition());
-                        infoWindow.setContent(
-                            "<div>" +
-                            "<a href='" + dataItemsArray[i].url + "' target='_blank'><h3>" + dataItemsArray[i].venue + "</h3></a>" +
-                            "<p><span style='font-weight:bold;'>Address: </span>" + dataItemsArray[i].address.join(' ') + "</p>" +
-                            "<p><span style='font-weight:bold;'>Telephone: </span>" + dataItemsArray[i].telephone + "</p>" +
-                            "<p><span style='font-weight:bold;'>Tip: </span>" + dataItemsArray[i].tip + "</p>" +
-                            "</div>"
-                        );
-                        infoWindow.open(map, marker);
-                    }
-                })(marker, i));*/
                 ++i;
-            }while(i < numOfVenues && i < dataItems.length);
+            }while((numOfVenues === 0 || i < numOfVenues) && i < dataItems.length);
+            if($.trim(self.currentFilter()).length === 0) {
+                filter_POI(self.currentFilter());
+            } else {
+                self.currentFilter('');
+            }
         }).error(function (evt) {
             //foursquare issue
             self.is4SquareIssueVisible(true);
         });
     };
 
-    var delete_markers = function () {
+    var delete_markers = function (isRetain0ndx) {
         for (var i = 0; i < markers.length; i++) {
-            markers[i].setMap(null);
+            if(isRetain0ndx && i === 0) {
+            } else {
+                markers[i].setMap(null);
+            }
         }
-        markers = [];
+        //markers = [];
+        markers.length = (isRetain0ndx) ? 1 : 0;
+        markersInfoWindow = [];
     };
 
     var create_markers = function (dataItems, i) {
@@ -124,7 +108,7 @@ var ViewModel = function () {
             lat: dataItems.venue.location.lat,
             lng: dataItems.venue.location.lng
         };
-        dataItemsArray[i] = dataAddlText;
+        markersInfoWindow[i] = dataAddlText;
         // Create a marker for each place.
         var completeAddr = dataAddlText.address.join('\n');
         var marker = new google.maps.Marker({
@@ -138,15 +122,42 @@ var ViewModel = function () {
                 map.panTo(marker.getPosition());
                 infoWindow.setContent(
                     "<div>" +
-                    "<a href='" + dataItemsArray[i].url + "' target='_blank'><h3>" + dataItemsArray[i].venue + "</h3></a>" +
-                    "<p><span style='font-weight:bold;'>Address: </span>" + dataItemsArray[i].address.join(' ') + "</p>" +
-                    "<p><span style='font-weight:bold;'>Telephone: </span>" + dataItemsArray[i].telephone + "</p>" +
-                    "<p><span style='font-weight:bold;'>Tip: </span>" + dataItemsArray[i].tip + "</p>" +
+                    "<a href='" + cachedPOIList[i].url + "' target='_blank'><h3>" + markersInfoWindow[i].venue + "</h3></a>" +
+                    "<p><span style='font-weight:bold;'>Address: </span>" + markersInfoWindow[i].address.join(' ') + "</p>" +
+                    "<p><span style='font-weight:bold;'>Telephone: </span>" + markersInfoWindow[i].telephone + "</p>" +
+                    "<p><span style='font-weight:bold;'>Tip: </span>" + markersInfoWindow[i].tip + "</p>" +
                     "</div>"
                 );
                 infoWindow.open(map, marker);
             }
         })(marker, i));
+    };
+
+    var filter_POI = function (thisFilter) {
+        thisFilter = $.trim(thisFilter);
+        if(thisFilter.length === 0) {
+            self.displayPOIList([]);
+            self.displayPOIList(cachedPOIList);
+        } else {
+            var tempArray =[];
+            for (var i = 0; i < cachedPOIList.length; i++) {
+                var obj = cachedPOIList[i];
+                if(obj.venue.name.search(new RegExp(thisFilter, 'i')) >= 0
+                    || obj.venue.location.formattedAddress.join(' ').search(new RegExp(thisFilter, 'i')) >= 0
+                    || (typeof obj.venue.contact.formattedPhone !== 'undefined' && obj.venue.contact.formattedPhone.search(new RegExp(thisFilter, 'i')) >= 0)
+                    || (typeof obj.venue.contact.phone !== 'undefined' && obj.venue.contact.phone.search(new RegExp(thisFilter, 'i')) >= 0)
+                    || obj.tips[0].text.search(new RegExp(thisFilter, 'i')) >= 0
+                ) {
+                    tempArray.push(cachedPOIList[i]);
+                }
+            }
+            self.displayPOIList([]);
+            self.displayPOIList(tempArray);
+        }
+        delete_markers(true);
+        for (var i = 0; i < self.displayPOIList().length; i++) {
+            create_markers(self.displayPOIList()[i], i);
+        }
     };
 
     self.isGoogleIssueVisible = ko.observable(false);
@@ -167,13 +178,15 @@ var ViewModel = function () {
         map_currentNeighborhood(self.currentNeighborhoodName());
 
         self.currentNeighborhoodName.subscribe(function () {
-            delete_markers();
+            cachedPOIList = [];
+            delete_markers(false);
             map_currentNeighborhood(self.currentNeighborhoodName());
         });
 
         self.currentFilter = ko.observable();
         self.currentFilter.subscribe(function () {
-            console.log('[' + self.currentFilter() + ']');
+            //console.log('[' + self.currentFilter() + ']');
+            filter_POI(self.currentFilter());
         });
 
         self.isRestTextVisible = ko.observable(true);

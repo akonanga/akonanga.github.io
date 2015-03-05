@@ -130,25 +130,8 @@
                             </div>-->
                         </div>
                         <div id="pointsOfInterestList">
-                            <ul>
-                                <li>a1</li>
-                                <li>a2</li>
-                                <li>a3</li>
-                                <li>a4</li>
-                                <li>a5</li>
-                                <li>a6</li>
-                                <li>a7</li>
-                                <li>a8</li>
-                                <li>a9</li>
-                                <li>a10</li>
-                                <li>a11</li>
-                                <li>a12</li>
-                                <li>a13</li>
-                                <li>a14</li>
-                                <li>a15</li>
-                                <li>a16</li>
-                                <li>a17</li>
-                                <li>a18</li>
+                            <ul data-bind="foreach: displayPOIList">
+                                <li><span data-bind="text: venue.name"></span>: <span data-bind="text: venue.contact.formattedPhone"></span></li>
                             </ul>
                         </div>
                     </div>
