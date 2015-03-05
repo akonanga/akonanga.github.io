@@ -70,6 +70,7 @@ None of these are required, but they may be helpful.
 1.  [https://klipfolio.uservoice.com/knowledgebase/articles/287122-displaying-a-google-map-with-markers-and-values](https://klipfolio.uservoice.com/knowledgebase/articles/287122-displaying-a-google-map-with-markers-and-values)
 1.  [http://stackoverflow.com/questions/6150409/google-map-v3-set-center-to-specific-marker](http://stackoverflow.com/questions/6150409/google-map-v3-set-center-to-specific-marker)
 1.  [https://developers.google.com/maps/documentation/javascript/examples/marker-remove](https://developers.google.com/maps/documentation/javascript/examples/marker-remove)
+1.  Click binding with parm [http://knockoutjs.com/documentation/click-binding.html](http://knockoutjs.com/documentation/click-binding.html)
 
 1.  [Google Maps](https://developers.google.com/maps/documentation/)
 

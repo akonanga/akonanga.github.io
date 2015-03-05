@@ -131,10 +131,18 @@
                         </div>
                         <div id="pointsOfInterestList">
                             <ul data-bind="foreach: displayPOIList">
-                                <li><span data-bind="text: venue.name"></span>: <span data-bind="text: venue.contact.formattedPhone"></span></li>
+                                <li data-bind="click: $parent.getPOIDetails"><span data-bind="text: venue.name"></span>: <span data-bind="text: venue.contact.formattedPhone"></span></li>
                             </ul>
                         </div>
                     </div>
+                </span>
+            </div>
+            <div id="pointsOfInterestDetails" class="col-md-6" data-bind="visible: !is4SquareIssueVisible() && isRestTextVisible">
+                <span style="display: none;" data-bind="foreach: displayPOIDetails, visible: isPOIDetailsVisible">
+                    <h4 data-bind="text: venue.name"></h4>
+                    <p>Address: <span data-bind="text: venue.location.formattedAddress"></span></p>
+                    <p>Telephone: <span data-bind="text: venue.contact.formattedPhone"></span></p>
+                    <p>Tip: <span data-bind="text: tips[0].text"></span></p>
                 </span>
             </div>
         </div>

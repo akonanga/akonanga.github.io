@@ -16,6 +16,8 @@ var ViewModel = function () {
     var cachedPOIList = [];
     self.displayPOIList = ko.observableArray([]);
 
+    self.isPOIDetailsVisible =  ko.observable(false);
+
 
     self.is4SquareIssueVisible = ko.observable(false);
     var client_id = 'C4KJ2R33H3VRWV4PGTJWPL1H4Q2YZ1KZMYAASDDJ5PV2JZPY';
@@ -180,6 +182,7 @@ var ViewModel = function () {
         self.currentNeighborhoodName.subscribe(function () {
             cachedPOIList = [];
             delete_markers(false);
+            self.isPOIDetailsVisible(false);
             map_currentNeighborhood(self.currentNeighborhoodName());
         });
 
@@ -197,6 +200,16 @@ var ViewModel = function () {
         self.isPOIListVisible = ko.observable(true);
         self.togglePOIList = function () {
             self.isPOIListVisible(!self.isPOIListVisible());
+        };
+
+        self.displayPOIDetails = ko.observableArray();
+        self.getPOIDetails = function (poi) {
+            console.log(poi);
+            var tempArray = [];
+            poi.venue.contact.formattedPhone = (typeof poi.venue.contact.formattedPhone === 'undefined') ? 'none' : poi.venue.contact.formattedPhone;
+            tempArray.push(poi)
+            self.displayPOIDetails(tempArray);
+            self.isPOIDetailsVisible(true);
         };
     }
 
