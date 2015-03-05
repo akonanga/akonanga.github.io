@@ -83,9 +83,6 @@ None of these are required, but they may be helpful.
 
 1.  [Google Maps](https://developers.google.com/maps/documentation/)
 
-### To execute the Neighborhood Map site:
-Click [http://akonanga.github.io/neighborhoodMap/index.html](http://akonanga.github.io/neighborhoodMap/index.html).
-
 ### Additional resources that helped me accomplish this project
 1.  I used [http://getbootstrap.com/](http://getbootstrap.com/) for styling.
 1.  I used a cdn namely [//cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js](//cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js) instead of downloading Knockout Framework
