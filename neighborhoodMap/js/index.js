@@ -9,19 +9,19 @@ var ViewModel = function () {
     var infoWindow;
     var service;
     var markers = [];
-    var markersInfoWindow = [];
+    var markersInfoWindow = [];                         //infowindow for the markers (aka venues)
 
-    var numOfVenues = 0;        //number of foursquare venues to keep; if 0 then keep all
+    var numOfVenues = 0;                                //number of foursquare venues to cache; if 0 then cache all
 
-    var cachedPOIList = [];
-    self.displayPOIList = ko.observableArray([]);
+    var cachedPOIList = [];                             //untouched json array from foursquare api for filter purposes
+    self.displayPOIList = ko.observableArray([]);       //poi list displayed
 
     self.isPOIDetailsVisible =  ko.observable(false);
 
-
     self.is4SquareIssueVisible = ko.observable(false);
-    var client_id = 'C4KJ2R33H3VRWV4PGTJWPL1H4Q2YZ1KZMYAASDDJ5PV2JZPY';
-    var client_secret = '3HVIXSPYGDXRUSGQSYUVSIA3QWHQJ3YMQQESLYKZKB2RVIQ5';
+
+    var client_id = 'C4KJ2R33H3VRWV4PGTJWPL1H4Q2YZ1KZMYAASDDJ5PV2JZPY';         //foursquare credentials
+    var client_secret = '3HVIXSPYGDXRUSGQSYUVSIA3QWHQJ3YMQQESLYKZKB2RVIQ5';     //foursquare credentials
 
     var myDefaultNeighborhood = {
         name: 'San Ramon',
@@ -55,13 +55,6 @@ var ViewModel = function () {
             });
             markers.push(marker);
             get_infoFrom4Square(results[0].geometry.location.lat(), results[0].geometry.location.lng());
-            //var marker = new google.maps.Marker({
-            //    map: map,
-            //    place: {
-            //        placeId: results[0].place_id,
-            //        location: results[0].geometry.location
-            //    }
-            //});
         }
     };
 
@@ -188,7 +181,6 @@ var ViewModel = function () {
 
         self.currentFilter = ko.observable();
         self.currentFilter.subscribe(function () {
-            //console.log('[' + self.currentFilter() + ']');
             filter_POI(self.currentFilter());
         });
 
@@ -204,23 +196,17 @@ var ViewModel = function () {
 
         self.displayPOIDetails = ko.observableArray();
         self.getPOIDetails = function (poi) {
-            console.log(poi);
             var tempArray = [];
             poi.venue.contact.formattedPhone = (typeof poi.venue.contact.formattedPhone === 'undefined') ? 'none' : poi.venue.contact.formattedPhone;
             tempArray.push(poi)
             self.displayPOIDetails(tempArray);
             self.isPOIDetailsVisible(true);
         };
-    }
 
-    //function initializeMap(thisNeighborhood) {
-    //    var mapOptions = {
-    //        center: new google.maps.LatLng(thisNeighborhood.lat, thisNeighborhood.lng),
-    //        zoom: 13
-    //    };
-    //    map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-    //    gMapInfoWindow = new google.maps.InfoWindow();
-    //}
+        self.hidePOIDetails = function () {
+            self.isPOIDetailsVisible(false);
+        };
+    }
 };
 
 
