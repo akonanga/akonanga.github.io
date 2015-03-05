@@ -192,6 +192,7 @@ var ViewModel = function () {
         self.isPOIListVisible = ko.observable(true);
         self.togglePOIList = function () {
             self.isPOIListVisible(!self.isPOIListVisible());
+            self.isPOIDetailsVisible(false);
         };
 
         self.displayPOIDetails = ko.observableArray();
