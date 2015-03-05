@@ -4,26 +4,23 @@
 
 You will develop a single page application featuring a map of your neighborhood or a neighborhood you would like to visit. You will then add additional functionality to this map including highlighted locations, third-party data about those locations and various ways to browse the content.
 
+###How to execute from my github
+[http://akonanga.github.io/neighborhoodMap/index4.html](http://akonanga.github.io/neighborhoodMap/index4.html)
 
 
 ###Functionality of the Neighborhood Map Project
-1.  Map is full screen.  But the map is not active that falls on the horizontal area of the heading and the Points On Interest (POI).
-    This is due to how Twitter Bootstrap container class is implemented. To have larger clickable markers see items 6 and 7.
-2.  Default neighborhood is San Ramon, CA.  Neighborhood will have the beach flag icon as its marker.
-3.  Neighborhood and Filter data entries and POI are placed at the bottom so that clickable markers will have larger area.
-4.  POIs are based from the Neighborhood entry and these POI's are coming from Foursquare API call.
-5.  POI will only have the name of the venue and it's telephone number.  POI is clickable so that the details will appear on the right overlaying the map.
-6.  The 'Points of Interest' label is clickable to shows/hide part of the POI area so that clickable markers will have larger area.
-7.  To have even larger clickable markers click the heading 'My Neighborhood Map Project' to show/hide totally the POI.
-8.  Filter will search the POI's on venue name, telephone, address and tip.
-9.  Once filtered markers will be updated to only show the filtered POIs.
-10. Markers are clickable to show the info window and re-centers the map to that clicked marker.
-11. Info Window will contain the venue name, address, telephone and tip.
-    Venue name is also clickable to go to that venue's home web page on a different browser tab.
+1.  Just like the cat clicker project, this project have a list of default point on the left side where it displays
+    Map Locations.  Map Locations items are clickable that will show the point in the map and will update the text on the right.
+1.  Addl Info and Summary data are pulled via ajax from foursquare
+1.  Addl Info list the first 5 items only.  I decided to limit to 5 items else I will run out of space since
+    foursquare's response gives 30 items.
+1.  Summary is updated only when an item in Addl Info is clicked.  It will show addl text on that Addl Info item and
+    a clickable link to go to that item's website.
+1.  Search functionality is incorporated in the map using google's code.  When an item on the search is clicked it will
+    update the map to show that item and add that point in Map Locations.  Also search functionality is using google's auto-complete.
 
 
-
-
+I suggest to search for a different city so that Addl Info are diversed.
 
 ###Why this Project?
 
@@ -66,14 +63,6 @@ None of these are required, but they may be helpful.
     1.  [http://en.wikipedia.org/w/api.php?format=json&action=opensearch&search=san%20ramon](http://en.wikipedia.org/w/api.php?format=json&action=opensearch&search=san%20ramon) notice the format parm.  This is use when inside a javascript.
 
 1.  [Google Maps Street View Service](https://developers.google.com/maps/documentation/javascript/streetview)
-1.  [https://developers.google.com/maps/documentation/javascript/places](https://developers.google.com/maps/documentation/javascript/places)
-1.  [https://developers.google.com/maps/documentation/javascript/events](https://developers.google.com/maps/documentation/javascript/events)
-1.  [https://developers.google.com/maps/documentation/javascript/examples/icon-simple](https://developers.google.com/maps/documentation/javascript/examples/icon-simple)
-1.  Subscribe example: [http://knockoutjs.com/examples/cartEditor.html](http://knockoutjs.com/examples/cartEditor.html)
-1.  [https://klipfolio.uservoice.com/knowledgebase/articles/287122-displaying-a-google-map-with-markers-and-values](https://klipfolio.uservoice.com/knowledgebase/articles/287122-displaying-a-google-map-with-markers-and-values)
-1.  [http://stackoverflow.com/questions/6150409/google-map-v3-set-center-to-specific-marker](http://stackoverflow.com/questions/6150409/google-map-v3-set-center-to-specific-marker)
-1.  [https://developers.google.com/maps/documentation/javascript/examples/marker-remove](https://developers.google.com/maps/documentation/javascript/examples/marker-remove)
-1.  Click binding with parm [http://knockoutjs.com/documentation/click-binding.html](http://knockoutjs.com/documentation/click-binding.html)
 
 1.  [Google Maps](https://developers.google.com/maps/documentation/)
 

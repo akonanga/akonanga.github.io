@@ -1,348 +1,215 @@
 /**
- * Created by vidaluson on 2/9/15.
+ * Created by vidaluson on 3/2/15.
  */
-
-
-var markers =[];
-var markPoints = [];
-var client_id = 'C4KJ2R33H3VRWV4PGTJWPL1H4Q2YZ1KZMYAASDDJ5PV2JZPY';
-var client_secret = '3HVIXSPYGDXRUSGQSYUVSIA3QWHQJ3YMQQESLYKZKB2RVIQ5';
-
-
-var map = new google.maps.Map(document.getElementById('map-canvas'), {
-    zoom: 12,
-    center: new google.maps.LatLng(37.769430, -121.991443),
-    title: 'Mi Casa',
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-});
-
-
-function markPoint(name, lat, long) {
-    this.name = name;
-    this.lat = ko.observable(lat);
-    this.long = ko.observable(long);
-
-    var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(lat, long),
-        title: name,
-        map: map,
-        draggable: true
-    });
-    markPoints.push(marker);
-    map.panTo(marker.getPosition())
-    //map.setCenter(marker.getPosition())
-
-    //if you need the position while dragging
-    google.maps.event.addListener(marker, 'drag', function () {
-        var pos = marker.getPosition();
-        this.lat(pos.lat());
-        this.long(pos.lng());
-    }.bind(this));
-
-    //if you just need to update it when the user is done dragging
-    google.maps.event.addListener(marker, 'dragend', function () {
-        var pos = marker.getPosition();
-        this.lat(pos.lat());
-        this.long(pos.lng());
-    }.bind(this));
-}
-
-function mapSearch(self) {
-    // Create the search box and link it to the UI element.
-    var input = /** @type {HTMLInputElement} */(
-        document.getElementById('pac-input'));
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-    var searchBox = new google.maps.places.SearchBox(
-        /** @type {HTMLInputElement} */(input));
-
-    // [START region_getplaces]
-    // Listen for the event fired when the user selects an item from the
-    // pick list. Retrieve the matching places for that item.
-    google.maps.event.addListener(searchBox, 'places_changed', function() {
-        var places = searchBox.getPlaces();
-
-        if (places.length == 0) {
-            return;
-        }
-        for (var i = 0, marker; marker = markers[i]; i++) {
-            marker.setMap(null);
-        }
-
-        // For each place, get the icon, place name, and location.
-        var bounds = new google.maps.LatLngBounds();
-        for (var i = 0, place; place = places[i]; i++) {
-            var image = {
-                url: place.icon,
-                size: new google.maps.Size(71, 71),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(17, 34),
-                scaledSize: new google.maps.Size(25, 25)
-            };
-
-            // Create a marker for each place.
-            var marker = new google.maps.Marker({
-                map: map,
-                icon: image,
-                title: place.name,
-                position: place.geometry.location
-            });
-
-            markers.push(marker);
-            //console.log(marker);
-            var markerItem = {
-                name: marker.title,
-                lat: marker['position'].k,
-                lng: marker['position'].D,
-                isAddlTextFetched: false,
-                addlTextSummary: null
-            };
-            self.markerList.push(new Marker(markerItem));
-            //self.currentMarker(markerItem);
-
-            bounds.extend(place.geometry.location);
-        }
-
-        map.fitBounds(bounds);
-    });
-    // [END region_getplaces]
-
-    // Bias the SearchBox results towards places that are within the bounds of the
-    // current map's viewport.
-    google.maps.event.addListener(map, 'bounds_changed', function() {
-        var bounds = map.getBounds();
-        searchBox.setBounds(bounds);
-    });
-}
-
-function getAddlInfo(self, thisMarker) {
-    var today = new Date();
-    var v = today.getFullYear().toString() + ("0" + (today.getMonth() + 1)).slice(-2) + ("0" + (today.getDate())).slice(-2);
-    var foursquareURL = 'https://api.foursquare.com/v2/venues/explore?ll=' + thisMarker.lat() + ',' + thisMarker.lng() + '&client_id=' + client_id + '&client_secret=' + client_secret + '&v=' + v;
-    $.getJSON(foursquareURL, function (data) {
-        //console.log(data);
-        var i = 0;
-        var upTo = 5;
-        var dataItems = data.response.groups[0].items;
-        var dataItemsArray = [];
-        do{
-            var dataAddlText = {
-                venue: dataItems[i].venue.name,
-                summary: dataItems[i].tips[0].text,
-                url: dataItems[i].venue.url
-            };
-            dataItemsArray[i] = dataAddlText;
-            ++i;
-        }while(i < 5 && i < dataItems.length);
-        self.currentMarker().addlTextSummary(dataItemsArray);
-        self.currentMarker().isAddlTextFetched(true);
-
-        self.addlInfoList().length = 0;
-        self.currentMarker().addlTextSummary().forEach(function (addlInfoItem) {
-            self.addlInfoList.push(new AddlInfo(addlInfoItem));
-        });
-        self.currentSummary(self.currentMarker().addlTextSummary()[0]);
-        //self.currentSummary(dataItemsArray[0]);
-    }).error(function (evt) {
-        //$nytHeaderElem.text('New York Times Articles Count Not Be Loaded');
-    });
-}
-
-/*
- {
- name: 'Mi Casa No Su Casa',
- lat: 37.769430,
- lng: -121.991443
- },
- */
-
-var initialMarkers = [
-    {
-        name: 'AT&T San Ramon',
-        lat: 37.766064,
-        lng: -121.963439,
-        isAddlTextFetched: false,
-        addlTextSummary: null
-    },
-    {
-        name: 'San Ramon Community Center',
-        lat: 37.765266,
-        lng: -121.953126,
-        isAddlTextFetched: false,
-        addlTextSummary: null
-    },
-    {
-        name: 'San Ramon Regional Medical Center',
-        lat: 37.776065,
-        lng: -121.958221,
-        isAddlTextFetched: false,
-        addlTextSummary: null
-    },
-    {
-        name: 'St. Joan of Arc Parish',
-        lat: 37.768081,
-        lng: -121.972779,
-        isAddlTextFetched: false,
-        addlTextSummary: null
-    }
-];
-
-
-//this.fetchedData = asyncDependentObservable(function () {
-//    return $.ajax("http://api.worldbank.org/country?prefix=?", {
-//        dataType: "jsonp",
-//        data: {per_page: this.numberToShow, region: this.chosenRegion, format: "jsonp"}
-//    }).pipe(function (data) {
-//        return data[1]
-//    });
-//}, this);
-
-
-var AddlInfo = function (data) {
-    this.venue = ko.observable(data.venue);
-    this.summary = ko.observable(data.summary);
-    this.url = ko.observable(data.url);
-};
-
-var Marker = function (data) {
-    this.name = ko.observable(data.name);
-    this.lat = ko.observable(data.lat);
-    this.lng = ko.observable(data.lng);
-    this.isAddlTextFetched = ko.observable(data.isAddlTextFetched);
-    this.addlTextSummary = ko.observable(data.addlTextSummary);
-    /*    this.addlTextSummary = asyncComputed(function() {
-     // Whenever "pageIndex", "sortColumn", or "sortDirection" change, this function will re-run
-     var addlData;
-     var client_id = 'C4KJ2R33H3VRWV4PGTJWPL1H4Q2YZ1KZMYAASDDJ5PV2JZPY';
-     var client_secret = '3HVIXSPYGDXRUSGQSYUVSIA3QWHQJ3YMQQESLYKZKB2RVIQ5';
-     var today = new Date();
-     var v = today.getFullYear().toString() + ("0" + (today.getMonth() + 1)).slice(-2) + ("0" + (today.getDate())).slice(-2);
-     var foursquareURL = 'https://api.foursquare.com/v2/venues/explore?ll=' + data.lat + ',' + data.lng + '&client_id=' + client_id + '&client_secret=' + client_secret + '&v=' + v;
-     return $.ajax(foursquareURL, {
-     dataType: "json"}).pipe(function (data) {
-     return data[1]
-     });
-     }, this);*/
-    /*    this.addlTextSummary = ko.observable();
-     ko.computed(function () {
-     //New York Times
-     var addlData;
-     var client_id = 'C4KJ2R33H3VRWV4PGTJWPL1H4Q2YZ1KZMYAASDDJ5PV2JZPY';
-     var client_secret = '3HVIXSPYGDXRUSGQSYUVSIA3QWHQJ3YMQQESLYKZKB2RVIQ5';
-     var today = new Date();
-     var v = today.getFullYear().toString() + ("0" + (today.getMonth() + 1)).slice(-2) + ("0" + (today.getDate())).slice(-2);
-     var foursquareURL = 'https://api.foursquare.com/v2/venues/explore?ll=' + data.lat + ',' + data.lng + '&client_id=' + client_id + '&client_secret=' + client_secret + '&v=' + v;
-     $.getJSON(foursquareURL, function (data) {
-     console.log(data);
-     this.addlTextSummary = data;
-     }).error(function (evt) {
-     //$nytHeaderElem.text('New York Times Articles Count Not Be Loaded');
-     });
-     }, this);*/
-    //this.imgSrc = ko.observable(data.imgSrc);
-    //this.level = ko.computed(function () {
-    //    var level;
-    //    var clickCnt = this.clickCount();
-    //    if(clickCnt < 2) {
-    //        level = 'Infant';
-    //    } else
-    //    if(clickCnt < 4) {
-    //        level = 'Toddler';
-    //    } else
-    //    if(clickCnt < 13) {
-    //        level = 'Child';
-    //    } else
-    //    if(clickCnt < 20) {
-    //        level = 'Teen';
-    //    } else
-    //    if(clickCnt >= 20) {
-    //        level = 'Adult';
-    //    }
-    //    return level;
-    //}, this);
-};
-
 
 var ViewModel = function () {
     var self = this;
 
-    this.markerList = ko.observableArray([]);
+    var map;
+    var infoWindow;
+    var service;
+    var markers = [];
+    var markersInfoWindow = [];                         //infowindow for the markers (aka venues)
 
-    initialMarkers.forEach(function (markerItem) {
-        self.markerList.push(new Marker(markerItem));
-    });
+    var numOfVenues = 0;                                //number of foursquare venues to cache; if 0 then cache all
 
+    var cachedPOIList = [];                             //untouched json array from foursquare api for filter purposes
+    self.displayPOIList = ko.observableArray([]);       //poi list displayed
 
-    this.currentSummary = ko.observable();
+    self.isPOIDetailsVisible =  ko.observable(false);
 
-//here
-    mapSearch(self);
+    self.is4SquareIssueVisible = ko.observable(false);
 
+    var client_id = 'C4KJ2R33H3VRWV4PGTJWPL1H4Q2YZ1KZMYAASDDJ5PV2JZPY';         //foursquare credentials
+    var client_secret = '3HVIXSPYGDXRUSGQSYUVSIA3QWHQJ3YMQQESLYKZKB2RVIQ5';     //foursquare credentials
 
+    var myDefaultNeighborhood = {
+        name: 'San Ramon',
+        lat: 37.766064,
+        lng: -121.963439
+    };
 
-    this.currentMarker = ko.observable(this.markerList()[0]);
-    new markPoint(this.markerList()[0].name(), this.markerList()[0].lat(), this.markerList()[0].lng());
+    var map_currentNeighborhood = function(thisNeighborhoodName) {
+        //https://developers.google.com/maps/documentation/javascript/places
+        var request = {
+            query: thisNeighborhoodName
+        };
+        service = new google.maps.places.PlacesService(map);
+        service.textSearch(request, callback);
+    };
 
-//here ajax
-    getAddlInfo(self, this.markerList()[0]);
-
-    this.addlInfoList = ko.observableArray([]);
-
-    this.changeMarker = function (clickedMarker) {
-        //console.log(clickedMarker.isAddlTextFetched());
-        self.currentMarker(clickedMarker);
-        if(typeof clickedMarker.name === 'function') {
-            new markPoint(clickedMarker.name(), clickedMarker.lat(), clickedMarker.lng());
-        } else {
-            //map.setCenter(new google.maps.LatLng(clickedMarker.lat(), clickedMarker.lng()));
-            new markPoint(clickedMarker.name, clickedMarker.lat, clickedMarker.lng);
-        }
-        if(!self.currentMarker().isAddlTextFetched()) {
-            getAddlInfo(self, self.currentMarker());
-            /*
-             var today = new Date();
-             var v = today.getFullYear().toString() + ("0" + (today.getMonth() + 1)).slice(-2) + ("0" + (today.getDate())).slice(-2);
-             var foursquareURL = 'https://api.foursquare.com/v2/venues/explore?ll=' + self.currentMarker().lat() + ',' + self.currentMarker().lng() + '&client_id=' + client_id + '&client_secret=' + client_secret + '&v=' + v;
-             $.getJSON(foursquareURL, function (data) {
-             //console.log(data);
-             var i = 0;
-             var upTo = 5;
-             var dataItems = data.response.groups[0].items;
-             var dataItemsArray = [];
-             do{
-             var dataAddlText = {
-             venue: dataItems[i].venue.name,
-             summary: dataItems[i].tips[0].text,
-             url: dataItems[i].venue.url
-             };
-             dataItemsArray[i] = dataAddlText;
-             ++i;
-             }while(i < 5 && i < dataItems.length);
-             self.currentMarker().addlTextSummary(dataItemsArray);
-             self.currentMarker().isAddlTextFetched(true);
-
-             self.addlInfoList().length = 0;
-             self.currentMarker().addlTextSummary().forEach(function (addlInfoItem) {
-             self.addlInfoList.push(new AddlInfo(addlInfoItem));
-             });
-             self.currentSummary(self.currentMarker().addlTextSummary()[0]);
-             //self.currentSummary(dataItemsArray[0]);
-             }).error(function (evt) {
-             //$nytHeaderElem.text('New York Times Articles Count Not Be Loaded');
-             });
-             */
-        } else {
-            self.addlInfoList().length = 0;
-            self.currentMarker().addlTextSummary().forEach(function (addlInfoItem) {
-                self.addlInfoList.push(new AddlInfo(addlInfoItem));
+    // Checks that the PlacesServiceStatus is OK, and adds a marker
+    // using the place ID and location from the PlacesService.
+    var callback = function(results, status) {
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+            var lat = results[0].geometry.location.lat();
+            var lng = results[0].geometry.location.lng();
+            var newCenter = new google.maps.LatLng(lat, lng);
+            map.setCenter(newCenter);
+            var image = 'images/beachflag.png';
+            var marker = new google.maps.Marker({
+                map: map,
+                icon: image,
+                title: results[0].name,
+                position: results[0].geometry.location
             });
-            self.currentSummary(self.currentMarker().addlTextSummary()[0]);
+            markers.push(marker);
+            get_infoFrom4Square(results[0].geometry.location.lat(), results[0].geometry.location.lng());
         }
     };
 
-    this.showSummary = function (clickedVenue) {
-        self.currentSummary(clickedVenue);
+    var get_infoFrom4Square = function (lat, lng) {
+        var today = new Date();
+        var v = today.getFullYear().toString() + ("0" + (today.getMonth() + 1)).slice(-2) + ("0" + (today.getDate())).slice(-2);
+        var foursquareURL = 'https://api.foursquare.com/v2/venues/explore?ll=' + lat + ',' + lng + '&client_id=' + client_id + '&client_secret=' + client_secret + '&v=' + v;
+        $.getJSON(foursquareURL, function (data) {
+            var i = 0;
+            var dataItems = data.response.groups[0].items;
+            do{
+                cachedPOIList.push(dataItems[i]);
+                create_markers(dataItems[i], i);
+                ++i;
+            }while((numOfVenues === 0 || i < numOfVenues) && i < dataItems.length);
+            if($.trim(self.currentFilter()).length === 0) {
+                filter_POI(self.currentFilter());
+            } else {
+                self.currentFilter('');
+            }
+        }).error(function (evt) {
+            //foursquare issue
+            self.is4SquareIssueVisible(true);
+        });
+    };
+
+    var delete_markers = function (isRetain0ndx) {
+        for (var i = 0; i < markers.length; i++) {
+            if(isRetain0ndx && i === 0) {
+            } else {
+                markers[i].setMap(null);
+            }
+        }
+        //markers = [];
+        markers.length = (isRetain0ndx) ? 1 : 0;
+        markersInfoWindow = [];
+    };
+
+    var create_markers = function (dataItems, i) {
+        var dataAddlText = {
+            venue: dataItems.venue.name,
+            address: dataItems.venue.location.formattedAddress,
+            telephone: (typeof dataItems.venue.contact.formattedPhone === 'undefined') ? 'none' : dataItems.venue.contact.formattedPhone,
+            tip: dataItems.tips[0].text,
+            url: dataItems.venue.url,
+            lat: dataItems.venue.location.lat,
+            lng: dataItems.venue.location.lng
+        };
+        markersInfoWindow[i] = dataAddlText;
+        // Create a marker for each place.
+        var completeAddr = dataAddlText.address.join('\n');
+        var marker = new google.maps.Marker({
+            map: map,
+            title: dataAddlText.venue + '\n' + completeAddr + '\n' + dataAddlText.telephone,
+            position: new google.maps.LatLng(dataAddlText.lat, dataAddlText.lng)
+        });
+        markers.push(marker);
+        google.maps.event.addListener(marker, "click", (function(marker, i) {
+            return function() {
+                map.panTo(marker.getPosition());
+                infoWindow.setContent(
+                    "<div>" +
+                    "<a href='" + cachedPOIList[i].url + "' target='_blank'><h3>" + markersInfoWindow[i].venue + "</h3></a>" +
+                    "<p><span style='font-weight:bold;'>Address: </span>" + markersInfoWindow[i].address.join(' ') + "</p>" +
+                    "<p><span style='font-weight:bold;'>Telephone: </span>" + markersInfoWindow[i].telephone + "</p>" +
+                    "<p><span style='font-weight:bold;'>Tip: </span>" + markersInfoWindow[i].tip + "</p>" +
+                    "</div>"
+                );
+                infoWindow.open(map, marker);
+            }
+        })(marker, i));
+    };
+
+    var filter_POI = function (thisFilter) {
+        thisFilter = $.trim(thisFilter);
+        if(thisFilter.length === 0) {
+            self.displayPOIList([]);
+            self.displayPOIList(cachedPOIList);
+        } else {
+            var tempArray =[];
+            for (var i = 0; i < cachedPOIList.length; i++) {
+                var obj = cachedPOIList[i];
+                if(obj.venue.name.search(new RegExp(thisFilter, 'i')) >= 0
+                    || obj.venue.location.formattedAddress.join(' ').search(new RegExp(thisFilter, 'i')) >= 0
+                    || (typeof obj.venue.contact.formattedPhone !== 'undefined' && obj.venue.contact.formattedPhone.search(new RegExp(thisFilter, 'i')) >= 0)
+                    || (typeof obj.venue.contact.phone !== 'undefined' && obj.venue.contact.phone.search(new RegExp(thisFilter, 'i')) >= 0)
+                    || obj.tips[0].text.search(new RegExp(thisFilter, 'i')) >= 0
+                ) {
+                    tempArray.push(cachedPOIList[i]);
+                }
+            }
+            self.displayPOIList([]);
+            self.displayPOIList(tempArray);
+        }
+        delete_markers(true);
+        for (var i = 0; i < self.displayPOIList().length; i++) {
+            create_markers(self.displayPOIList()[i], i);
+        }
+    };
+
+    self.isGoogleIssueVisible = ko.observable(false);
+    if(typeof google === 'undefined') {
+        self.isGoogleIssueVisible(true);
+    } else {
+        //init google map BEGIN
+        var mapOptions = {
+            center: new google.maps.LatLng(myDefaultNeighborhood.lat, myDefaultNeighborhood.lng),
+            zoom: 13
+        };
+        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+        infoWindow = new google.maps.InfoWindow();
+        //init google map END
+
+        self.currentNeighborhood = ko.observable(myDefaultNeighborhood);
+        self.currentNeighborhoodName = ko.observable(myDefaultNeighborhood.name);
+        map_currentNeighborhood(self.currentNeighborhoodName());
+
+        self.currentNeighborhoodName.subscribe(function () {
+            cachedPOIList = [];
+            delete_markers(false);
+            self.isPOIDetailsVisible(false);
+            map_currentNeighborhood(self.currentNeighborhoodName());
+        });
+
+        self.currentFilter = ko.observable();
+        self.currentFilter.subscribe(function () {
+            filter_POI(self.currentFilter());
+        });
+
+        self.isRestTextVisible = ko.observable(true);
+        self.toggleRestText = function () {
+            self.isRestTextVisible(!self.isRestTextVisible());
+        };
+
+        self.isPOIListVisible = ko.observable(true);
+        self.togglePOIList = function () {
+            self.isPOIListVisible(!self.isPOIListVisible());
+            self.isPOIDetailsVisible(false);
+        };
+
+        self.displayPOIDetails = ko.observableArray();
+        self.getPOIDetails = function (poi) {
+            var tempArray = [];
+            poi.venue.contact.formattedPhone = (typeof poi.venue.contact.formattedPhone === 'undefined') ? 'none' : poi.venue.contact.formattedPhone;
+            tempArray.push(poi)
+            self.displayPOIDetails(tempArray);
+            self.isPOIDetailsVisible(true);
+        };
+
+        self.hidePOIDetails = function () {
+            self.isPOIDetailsVisible(false);
+        };
     }
 };
 
+
 ko.applyBindings(new ViewModel());
+
