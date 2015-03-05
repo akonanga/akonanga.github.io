@@ -9,7 +9,7 @@ You will develop a single page application featuring a map of your neighborhood 
 ###Functionality of the Neighborhood Map Project
 1.  Map is full screen.  But the map is not active that falls on the horizontal area of the heading and the Points On Interest (POI).
     This is due to how Twitter Bootstrap container class is implemented. To have larger clickable markers see items 6 and 7.
-2.  Default neighborhood is San Ramon, CA.
+2.  Default neighborhood is San Ramon, CA.  Neighborhood will have the beach flag icon as its marker.
 3.  Neighborhood and Filter data entries and POI are placed at the bottom so that clickable markers will have larger area.
 4.  POIs are based from the Neighborhood entry and these POI's are coming from Foursquare API call.
 5.  POI will only have the name of the venue and it's telephone number.  POI is clickable so that the details will appear on the right overlaying the map.
