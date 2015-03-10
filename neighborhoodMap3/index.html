@@ -7,40 +7,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" media="screen and (min-width: 1024px)" href="css/style.css"/>
 </head>
 <body>
 
 <div id="map-canvas" data-bind="visible: !isGoogleIssueVisible()"></div>
 
-<div id="myTexts" style="width: 500px;">
-    <div class="container">
+<div id="myHeading">
+    <h4 data-bind="click: toggleRestText">My Neighborhood Map Project</h4>
+</div>
+
+<span data-bind="visible: isRestTextVisible">
+    <div class="container" id="issueGoogle" style="display: none;" data-bind="visible: isGoogleIssueVisible">
         <div class="row">
-            <h4 data-bind="click: toggleRestText">My Neighborhood Map Project</h4>
-        </div>
-        <div data-bind="visible: isRestTextVisible">
-            <div class="row" id="issueGoogle" style="display: none;" data-bind="visible: isGoogleIssueVisible">
-                <div class="col-md-6">
-                    <div class="panel panel-danger">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Goggle Problem</h3>
-                        </div>
-                        <div class="panel-body">
-                            There's a problem on accessing Google.  Maybe for the following reason(s):
-                            <ul>
-                                <li>Your are not connected to the internet</li>
-                                <li>Your firewall does not allow access to Google</li>
-                                <li>Google API has changed</li>
-                                <li>Google itself has a problem</li>
-                            </ul>
-                        </div>
+            <div class="col-md-6">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Goggle Problem</h3>
+                    </div>
+                    <div class="panel-body">
+                        There's a problem on accessing Google. Maybe for the following reason(s):
+                        <ul>
+                            <li>Your are not connected to the internet</li>
+                            <li>Your firewall does not allow access to Google</li>
+                            <li>Google API has changed</li>
+                            <li>Google itself has a problem</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</span>
+
+
+<div id="myEntries" data-bind="visible: !isGoogleIssueVisible()">
+    <span data-bind="visible: !is4SquareIssueVisible() && isRestTextVisible">
+        <input type="text" class="form-control" id="currentNeighborhood"
+               data-bind="value: currentNeighborhoodName" placeholder="city, state">
+        <h4 data-bind="click: togglePOIList">Points of Interest</h4>
+        <div data-bind="visible: isPOIListVisible">
+            <div id="filterDIV">
+                <input type="text" class="form-control" id="filterInput" data-bind="value: currentFilter"
+                       placeholder="filter">
+            </div>
+            <div id="pointsOfInterestList">
+                <ul data-bind="foreach: displayPOIList">
+                    <li data-bind="click: $parent.getPOIDetails"><span data-bind="text: venue.name"></span>:
+                        <span data-bind="text: venue.contact.formattedPhone"></span></li>
+                </ul>
+            </div>
+        </div>
+    </span>
 </div>
 
+<!--
 <div id="myEntries" data-bind="visible: !isGoogleIssueVisible()">
     <div class="container">
         <div class="row">
@@ -74,6 +95,7 @@
         </div>
     </div>
 </div>
+-->
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js"></script>
