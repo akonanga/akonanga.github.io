@@ -22,7 +22,7 @@ You will develop a single page application featuring a map of your neighborhood 
 1.  Filter will search the POI's on venue name, telephone, address and tip.
 1.  Once filtered markers will be updated to only show the filtered POIs.
 1.  Markers are clickable to show the info window and re-centers the map to that clicked marker.
-1.  Info Window will contain the venue name, address, telephone and tip.
+1.  Info Window will contain the venue name, address, telephone and tip.  Tip is not shown on phones.
     Venue name is also clickable to go to that venue's home web page on a different browser tab.
 
 
@@ -52,6 +52,9 @@ You will learn how design patterns assist in developing a manageable codebase. Y
 1.  Implement a list view of the identified locations.
 1.  Add additional functionality using third-party APIs when a map marker, search result, or list view entry is clicked (ex. Yelp reviews, Wikipedia, StreetView/Flickr images, etc). If you need a refresher on making AJAX requests to third-party servers, check out our Intro to AJAX course.
 
+
+#To execute:
+[http://akonanga.github.io/neighborhoodMap4/index.html](http://akonanga.github.io/neighborhoodMap4/index.html)
 
 ###Helpful Resources
 
