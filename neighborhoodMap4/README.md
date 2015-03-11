@@ -79,6 +79,10 @@ None of these are required, but they may be helpful.
 1.  [https://developers.google.com/maps/documentation/javascript/examples/marker-remove](https://developers.google.com/maps/documentation/javascript/examples/marker-remove)
 1.  Click binding with parm [http://knockoutjs.com/documentation/click-binding.html](http://knockoutjs.com/documentation/click-binding.html)
 1.  Opening infowindow when poi list is clicked[http://stackoverflow.com/questions/18333679/google-maps-open-info-window-after-click-on-a-link](http://stackoverflow.com/questions/18333679/google-maps-open-info-window-after-click-on-a-link)
+1.  Media Queries: [https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Media_queries](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Media_queries)
+1.  Media Queries: [http://www.andreasnorman.com/css-media-queries-for-mobile-devices/](http://www.andreasnorman.com/css-media-queries-for-mobile-devices/)
+1.  Marker animation: [https://developers.google.com/maps/documentation/javascript/examples/marker-animations](https://developers.google.com/maps/documentation/javascript/examples/marker-animations)
+1.  Marker animation: [http://stackoverflow.com/questions/6515250/one-marker-animation-at-a-time-google-maps-api-3](http://stackoverflow.com/questions/6515250/one-marker-animation-at-a-time-google-maps-api-3)
 
 1.  [Google Maps](https://developers.google.com/maps/documentation/)
 
