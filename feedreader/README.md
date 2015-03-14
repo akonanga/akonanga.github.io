@@ -3,6 +3,12 @@
 In this project you are given a web-based application that reads RSS feeds. The original developer of this application clearly saw the value in testing, they've already included [Jasmine](http://jasmine.github.io/) and even started writing their first test suite! Unfortunately, they decided to move on to start their own company and we're now left with an application with an incomplete test suite. That's where you come in.
 
 
+##To execute this project:
+[http://akonanga.github.io/feedreader/index.html](http://akonanga.github.io/feedreader/index.html)
+
+###N.B.:  Please scroll to the bottom for list of resources.
+
+
 ## Why this Project?
 
 Testing is an important part of the development process and many organizations practice a standard of development known as "test-driven development". This is when developers write tests first, before they ever start developing their application. All the tests initially fail and then they start writing application code to make these tests pass.
@@ -39,7 +45,7 @@ You will learn how to use Jasmine to write a number of tests against a pre-exist
 14. When complete - all of your tests should pass.
 
 
-#Resources that helped my to finish this project
+#Resources that helped me finish this project
 1.  Jasmine loop: [http://tosbourn.com/using-loops-in-jasmine/](http://tosbourn.com/using-loops-in-jasmine/)
 1.  Jasmine Doc: [http://jasmine.github.io/2.1/introduction.html](http://jasmine.github.io/2.1/introduction.html)
 1.  [https://www.safaribooksonline.com/library/view/javascript-testing-with/9781449356729/_identity_tobe.html](https://www.safaribooksonline.com/library/view/javascript-testing-with/9781449356729/_identity_tobe.html)
