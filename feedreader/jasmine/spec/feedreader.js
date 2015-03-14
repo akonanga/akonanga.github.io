@@ -29,7 +29,7 @@ $(function() {
 
         function test_url(feed) {
             /*
-            *   test_url function to test the feed has a url define and not null/empty
+            *   test_url function is to test that the feed has a url defined, not null and not empty
             *   parm(s):
             *       feed = object that should contain the url to be tested
             */
@@ -42,7 +42,7 @@ $(function() {
 
         for(var x = 0; x < allFeeds.length; x++) {
             /*
-            *   loop thru all the feeds and pass each feed to test_url
+            *   loop thru all the feeds and pass each feed to test_url function
             */
             test_url(allFeeds[x]);
         }
@@ -51,7 +51,7 @@ $(function() {
 
         function test_name(feed) {
             /*
-             *   test_name function to test the feed has a name define and not null/empty
+             *   test_name function to test that the feed has a name defined, not null and not empty
              *   parm(s):
              *       feed = object that should contain the name to be tested
              */
@@ -64,7 +64,7 @@ $(function() {
 
         for(var x = 0; x < allFeeds.length; x++) {
             /*
-             *   loop thru all the feeds and pass each feed to test_name
+             *   loop thru all the feeds and pass each feed to test_name function
              */
             test_name(allFeeds[x]);
         }
@@ -73,7 +73,7 @@ $(function() {
 
     describe('The menu', function() {
         /*
-        *   Test the menu that the menu element is hiddend by default and
+        *   Test the menu that it is hidden by default as
         *   the first part of the click toggle logic
         */
         it('element is hidden by default', function () {
@@ -88,8 +88,7 @@ $(function() {
 
         it('icon is triggered NOT to display the menu', function() {
             /*
-            *   This is the first test that is part of the click toggle logic
-            *   NOT to display the menu.
+            *   Test to check that the menu is not displayed part of the click toggle logic
             */
             expect($('body').hasClass('menu-hidden')).toBeTruthy();
         });
@@ -109,7 +108,7 @@ $(function() {
 
         it('icon is triggered to display the menu', function() {
             /*
-            *   Test make sure the menu is displayed when the menu icon is click
+            *   Test to make sure the menu is displayed when the menu icon is click
             *   (see beforeEach logic above to trigger the menu click)
             */
             expect($('body').hasClass('menu-hidden')).toBeFalsy();
@@ -125,7 +124,7 @@ $(function() {
         beforeEach(function (done) {
             /*
             *   This is make sure that the ajax call, loadFeed(), is executed first and is done
-            *   This done() function communicates with the Jazmine's test logic
+            *   before Jasmine's test logic
             */
             loadFeed(0, function () {
                 done();
@@ -145,14 +144,14 @@ $(function() {
 
     describe('New Feed Selection', function() {
         /*
-        *   Test to make sure there is a 'NEW' entry other than the first
+        *   Test to make sure there is a 'NEW' feed other than the first
         */
         beforeEach(function (done) {
             /*
              *   This is make sure that the ajax call, loadFeed(), is executed first and is done
-             *   This done() function communicates with the Jazmine's test logic.
+             *   before Jasmine's test logic.
              *   To make sure it's a new entry randomize a number between 1 and 3 so that
-             *   the first entry is not picked up.  Random number is store in loadNdx.
+             *   the first feed is not picked up.  Random number is store in loadNdx.
              */
             var loadNdx = Math.floor(Math.random() * 3) + 1;
             loadFeed(loadNdx, function () {
@@ -164,7 +163,7 @@ $(function() {
         it('should have new feed', function (done) {
             /*
              *   Test to make sure that the title is not the same as title of the first feed
-             *   by comparing the title text of the new against the name of the first feed.
+             *   by comparing the title text of the new feed against the name of the first feed.
              *   Entry coming from the ajax call, loadFeed()
              */
             expect($('.header-title').text() !== allFeeds[0].name).toBeTruthy();
